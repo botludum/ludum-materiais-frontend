@@ -16,7 +16,25 @@ class CadastrarTutorial extends Component {
   }
 
   handleClick(event) {
-    console.log('Clique');
+    var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
+    console.log("values",this.state.nomeTutorial,this.state.descricaoTutorial,this.state.nomeUsuario);
+
+    var body = {
+    "title": this.state.nomeTutorial,
+    "description":this.state.descricaoTutorial,
+    "status": null,
+    }
+
+    axios.post(apiBaseUrl, body)
+   .then(function (response) {
+     console.log(response);
+     if(response.data.code === 200){
+      console.log("registration successfull");
+     }
+   })
+   .catch(function (error) {
+     console.log(error);
+   });
   }
 
   render() {
