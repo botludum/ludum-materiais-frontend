@@ -49,12 +49,14 @@ class CadastrarTutorial extends Component {
              hintText="Nome do seu tutorial"
              floatingLabelText="Nome tutorial"
              onChange = {(event,newValue) => this.setState({nomeTutorial:newValue})}
+             style = {style_text}
              />
            <br/>
            <TextField
              hintText="Escreva o seu tutorial"
              floatingLabelText="Descrição tutorial"
              onChange = {(event,newValue) => this.setState({descricaoTutorial:newValue})}
+             style = {style_text}
              />
            <br/>
            <RaisedButton label="Enviar" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
@@ -66,7 +68,16 @@ class CadastrarTutorial extends Component {
 }
 
 const style = {
-  margin: 15,
+  marginLeft: 750,
+  marginRight: 750,
+  display : 'flex',
+  marginTop: 60,
 };
+
+const style_text = {
+  marginLeft: 750,
+  marginRight: 750,
+  marginTop: 20,
+}
 
 export default CadastrarTutorial;
