@@ -41,22 +41,21 @@ class CadastrarTutorial extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <div>
+          <div style={style}>
           <AppBar
-             title="Cadastrar Tutorial"
+             title="Cadastro do Tutorial"
            />
            <TextField
              hintText="Nome do seu tutorial"
-             floatingLabelText="Nome tutorial"
+             floatingLabelText="Nome do tutorial"
              onChange = {(event,newValue) => this.setState({nomeTutorial:newValue})}
-             style = {style_text}
              />
            <br/>
            <TextField
              hintText="Escreva o seu tutorial"
-             floatingLabelText="Descrição tutorial"
+             floatingLabelText="Descrição do tutorial"
              onChange = {(event,newValue) => this.setState({descricaoTutorial:newValue})}
-             style = {style_text}
+             rowsMax = "20"
              />
            <br/>
            <RaisedButton label="Enviar" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
@@ -68,16 +67,9 @@ class CadastrarTutorial extends Component {
 }
 
 const style = {
-  marginLeft: 750,
-  marginRight: 750,
-  display : 'flex',
-  marginTop: 60,
+  textAlign : 'center'
 };
 
-const style_text = {
-  marginLeft: 750,
-  marginRight: 750,
-  marginTop: 20,
-}
+
 
 export default CadastrarTutorial;
