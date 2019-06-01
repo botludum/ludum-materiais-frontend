@@ -43,6 +43,7 @@ class CadastrarTutorial extends Component {
         <MuiThemeProvider>
           <div style={style}>
           <AppBar
+             style={{backgroundColor: '#bd6eff'}}
              title="Cadastro do Tutorial"
            />
            <TextField
@@ -53,12 +54,15 @@ class CadastrarTutorial extends Component {
            <br/>
            <TextField
              hintText="Escreva o seu tutorial"
-             floatingLabelText="Descrição do tutorial"
+             floatingLabelText="Descrição"
              onChange = {(event,newValue) => this.setState({descricaoTutorial:newValue})}
-             rowsMax = "20"
+             rowsMax = "25"
+             rows = "25"
+             multiLine = {true}
+             style = {style_descricao}
              />
            <br/>
-           <RaisedButton label="Enviar" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
+           <RaisedButton label="Enviar" primary={true} style={style_button} onClick={(event) => this.handleClick(event)} />
           </div>
          </MuiThemeProvider>
       </div>
@@ -67,9 +71,16 @@ class CadastrarTutorial extends Component {
 }
 
 const style = {
-  textAlign : 'center'
+  textAlign : 'center',
 };
 
+const style_button = {
+  textAlign : 'center',
+  primary : "#bd6eff"
+}
+const style_descricao = {
+  width : 800
+}
 
 
 export default CadastrarTutorial;
