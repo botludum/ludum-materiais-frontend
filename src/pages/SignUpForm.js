@@ -3,6 +3,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+const emailRegex = RegExp(
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+);
+
+const formValid = formErrors => {
+  let valid = true;
+
+  Object.values(formErrors).forEach(val => {
+    val.length > 0 && (valid = false);
+  });
+
+  return valid;
+};
 class SignUpForm extends Component {
     constructor() {
         super();
@@ -22,15 +35,46 @@ class SignUpForm extends Component {
         let target = e.target;
         let value = target.type === 'checkbox' ? target.checked : target.value;
         let name = target.name;
+        let formErrors = this.state.formErrors;
 
+        console.log("Nome: ", name);
+        console.log("Value: ", value);
+
+        switch(name) { 
+          case "nome":
+            formErrors.name = value.length < 3 && value.length > 0 
+              ? "O nome deve ter pelo menos 3 letras"
+              : "";
+            break;
+          case "senha":
+            formErrors.password = value.length < 5 && value.length > 0 
+              ? "A senha deve ter pelo menos 5 digítos"
+              : "";
+            break;
+          case "email":
+            formErrors.email = emailRegex.test(value) && value.length > 0 
+              ? ''
+              : 'Email invalido';
+            break;
+        }
         this.setState({
+          formErrors,
           [name]: value
-        });
-    }
+        }, () => console.log(this.state));
+    };
 
-    handleSubmit(e) {
+    handleSubmit = e => {
         e.preventDefault();
-
+        if(formValid(this.state)){
+          console.log(`
+            --SUBMITTING--
+            NOME: ${this.state.name}
+            EMAIL: ${this.state.email}
+            SENHA: ${this.state.password}
+            `);
+        } else {
+          console.error('FORM INVALIDA - MOSTRAR MENSAGEM DE ERRO');
+        }
         console.log('The form was submitted with the following data:');
         console.log(this.state);
     }
