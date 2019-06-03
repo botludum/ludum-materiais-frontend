@@ -7,24 +7,33 @@ const emailRegex = RegExp(
   /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 );
 
-const formValid = formErrors => {
+const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
 
   Object.values(formErrors).forEach(val => {
     val.length > 0 && (valid = false);
   });
 
+  Object.values(rest).forEach(val => {
+    val === null && (valid = false);
+  });
+
   return valid;
 };
 class SignUpForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            email: '',
-            password: '',
-            name: '',
-            hasAgreed: false
+            email: null,
+            password: null,
+            name: null,
+            hasAgreed: false, 
+            formErrors: { 
+              name: "",
+              email: "",
+              password: ""
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -65,7 +74,7 @@ class SignUpForm extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        if(formValid(this.state)){
+        if(formValid(this.state)) {
           console.log(`
             --SUBMITTING--
             NOME: ${this.state.name}
@@ -73,30 +82,52 @@ class SignUpForm extends Component {
             SENHA: ${this.state.password}
             `);
         } else {
-          console.error('FORM INVALIDA - MOSTRAR MENSAGEM DE ERRO');
+          console.error('FORMA INVALIDA - MOSTRAR MENSAGEM DE ERRO');
         }
-        console.log('The form was submitted with the following data:');
-        console.log(this.state);
-    }
+    };
 
     render() {
+      const { formErrors } = this.state 
         return (
         <div className="FormCenter">
             <form onSubmit={this.handleSubmit} className="FormFields">
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="name">Nome Completo</label>
-                <input type="text" id="name" className="FormField__Input" placeholder="Digite seu nome completo" name="name" value={this.state.name} onChange={this.handleChange} />
+                <input 
+                  type="text" 
+                  id="name" 
+                  className= "FormField__Input"
+                  placeholder="Digite seu nome completo" 
+                  name="name" 
+                  value={this.state.name} 
+                  onChange={this.handleChange} 
+                />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="password">Senha</label>
-                <input type="password" id="password" className="FormField__Input" placeholder="Digite sua senha" name="password" value={this.state.password} onChange={this.handleChange} />
+                <input 
+                type="password" 
+                id="password" 
+                className="FormField__Input" 
+                placeholder="Digite sua senha" 
+                name="password" 
+                value={this.state.password} 
+                onChange={this.handleChange} />
               </div>
               <div className="FormField">
                 <label className="FormField__Label" htmlFor="email">Email</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Digite seu Email" name="email" value={this.state.email} onChange={this.handleChange} />
+                <input 
+                type="email" 
+                id="email" 
+                className="FormField__Input" 
+                placeholder="Digite seu Email" 
+                name="email" 
+                value={this.state.email} 
+                onChange={this.handleChange} />
               </div>
               <div className="FormField">
-                  <button className="FormField__Button mr-20">Cadastrar</button> <Link to="/sign-in" className="FormField__Link">Já possuo conta</Link>
+                  <button className="FormField__Button mr-20">Cadastrar</button> <Link to="/sign-in" 
+                  className="FormField__Link">Já possuo conta</Link>
               </div>
             </form>
           </div>
