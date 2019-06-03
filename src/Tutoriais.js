@@ -31,8 +31,8 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-function createData(name, calories, fat, carbs, protein, visualizar, aceitar, rejeitar) {
-  return { name, calories, fat, carbs, protein, visualizar, aceitar, rejeitar };
+function createData(nome, dificuldade, status, autor, visualizar, aceitar, rejeitar) {
+  return { nome, dificuldade, status, autor, visualizar, aceitar, rejeitar };
 }
 
 const rows = [
@@ -88,25 +88,25 @@ function Tutoriais() {
           </TableHead>
           <TableBody>
             {rows.map(row => (
-              <StyledTableRow key={row.name}>
+              <StyledTableRow key={row.nome}>
                 <StyledTableCell component="th" scope="row">
-                  {row.name}
+                  {row.nome}
                 </StyledTableCell>
-                <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+                <StyledTableCell align="right">{row.dificuldade}</StyledTableCell>
+                <StyledTableCell align="right">{row.status}</StyledTableCell>
+                <StyledTableCell align="right">{row.autor}</StyledTableCell>
                 <StyledTableCell align="right">{row.visualizar}
-                  <IconButton className={classes.button} aria-label="Delete">
+                  <IconButton className={classes.button} aria-label="Visualizar">
                     <VisibilityIcon />
                   </IconButton>
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.aceitar}
-                  <IconButton className={classes.button} aria-label="Delete">
+                  <IconButton className={classes.button} aria-label="Aceitar">
                     <DoneIcon />
                   </IconButton>
                 </StyledTableCell>
                 <StyledTableCell align="right">{row.rejeitar}
-                  <IconButton className={classes.button} aria-label="Delete">
+                  <IconButton className={classes.button} aria-label="Rejeitar">
                     <CloseIcon />
                   </IconButton>
                 </StyledTableCell>
