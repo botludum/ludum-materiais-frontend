@@ -65,6 +65,8 @@ class SignUpForm extends Component {
               ? ''
               : 'Email invalido';
             break;
+          default:
+            break;
         }
         this.setState({
           formErrors,
@@ -87,7 +89,6 @@ class SignUpForm extends Component {
     };
 
     render() {
-      const { formErrors } = this.state 
         return (
         <div className="FormCenter">
             <form onSubmit={this.handleSubmit} className="FormFields">
