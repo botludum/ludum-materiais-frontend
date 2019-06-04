@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import Modal from 'react-modal';
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -25,7 +26,20 @@ class CadastrarTutorial extends Component {
       nomeTutorial:'',
       descricaoTutorial:'',
       nomeUsuario:'',
+      modalIsOpen: false,
+      error: false,
     }
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   handleClick(event) {
@@ -96,10 +110,36 @@ class CadastrarTutorial extends Component {
           </div>
         </MuiThemeProvider>
         <div>
+      <Modal
+      isOpen={this.state.modalIsOpen}
+      onRequestClose={this.closeModal}
+      style={customStyles}
+      contentLabel="Example Modal"
+      >
+      Hello
+      </Modal>
+      </div>
       </div>
     );
   }
 }
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    width: window.innerWidth * 0.2,
+    height: window.innerHeight * 0.2,
+    backgroundColor: 'white',
+  },
+  overlay: {
+    backgroundColor: 'white',
+  }
+};
 
 const style_bar = {
   backgroundColor: '#63347f',
