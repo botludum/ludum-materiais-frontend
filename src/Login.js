@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, NavLink } from 'react-router-dom';
-import SignUpForm from './pages/SignUpForm';
 import SignInForm from './pages/SignInForm';
 import Ludum from './Images/lg.png';
 
@@ -15,17 +14,12 @@ class App extends Component {
             <img className="Logo" src = { Ludum } alt = "LudumLogo" />
           </div>
           <div className="App__Form">
-            <div className="PageSwitcher">
-                <NavLink to="/sign-in" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Entrar</NavLink>
-                <NavLink exact to="/" activeClassName="PageSwitcher__Item--Active" className="PageSwitcher__Item">Cadastrar</NavLink>
-              </div>
-              <div className="FormTitle">
-                  <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Entrar</NavLink> ou <NavLink exact to="/" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Cadastrar</NavLink>
-              </div>
-              <Route exact path="/" component={SignUpForm}>
-              </Route>
-              <Route path="/sign-in" component={SignInForm}>
-              </Route>
+            <br/>
+            <div className="FormTitle">
+              <NavLink to="/sign-in" activeClassName="FormTitle__Link--Active" className="FormTitle__Link">Entrar</NavLink>
+            </div>
+            <Route path="/sign-in" component={SignInForm}>
+            </Route>
           </div>
 
         </div>

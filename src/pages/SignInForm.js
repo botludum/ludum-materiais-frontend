@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 class SignInForm extends Component {
     constructor() {
         super();
 
         this.state = {
-            email: '',
+            nome: '',
             password: ''
         };
 
@@ -36,8 +35,8 @@ class SignInForm extends Component {
         <div className="FormCenter">
             <form className="FormFields" onSubmit={this.handleSubmit}>
             <div className="FormField">
-                <label className="FormField__Label" htmlFor="email">Email</label>
-                <input type="email" id="email" className="FormField__Input" placeholder="Digite seu Email" name="email" value={this.state.email} onChange={this.handleChange} />
+                <label className="FormField__Label" htmlFor="email">Nome</label>
+                <input type="name" id="nome" className="FormField__Input" placeholder="Digite seu nome" name="nome" value={this.state.email} onChange={this.handleChange} />
               </div>
 
               <div className="FormField">
@@ -46,7 +45,7 @@ class SignInForm extends Component {
               </div>
 
               <div className="FormField">
-                  <button className="FormField__Button mr-20">Entrar</button> <Link to="/" className="FormField__Link">Cadastre-se</Link>
+                  <button className="FormField__Button mr-20">Entrar</button>
               </div>
             </form>
           </div>
