@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
 
 class CadastrarTutorial extends Component {
   constructor(props){
@@ -46,23 +46,25 @@ class CadastrarTutorial extends Component {
              style={{backgroundColor: '#bd6eff'}}
              title="Cadastro do Tutorial"
            />
-           <TextField
-             hintText="Nome do seu tutorial"
-             floatingLabelText="Nome do tutorial"
-             onChange = {(event,newValue) => this.setState({nomeTutorial:newValue})}
-             />
-           <br/>
-           <TextField
-             hintText="Escreva o seu tutorial"
-             floatingLabelText="Descrição"
-             onChange = {(event,newValue) => this.setState({descricaoTutorial:newValue})}
-             rowsMax = "25"
-             rows = "25"
-             multiLine = {true}
-             style = {style_descricao}
-             />
-           <br/>
            <RaisedButton label="Enviar" primary={true} style={style_button} onClick={(event) => this.handleClick(event)} />
+            <TextField
+              error={this.state.error}
+              id="standard-name"
+              label="Nome do tutorial"
+              onChange = {(event) => this.setState({nomeTutorial:event.target.value})}
+              margin="normal"
+            />
+            <br/>
+            <TextField
+              label="Escreva o seu tutorial"
+              onChange = {(event) => this.setState({descricaoTutorial: event.target.value})}
+              multiline={true}
+              rowsMax = "20"
+              rows = "15"
+              variant="outlined"
+              style={style_descricao}
+            />
+            <br/>
           </div>
          </MuiThemeProvider>
       </div>
