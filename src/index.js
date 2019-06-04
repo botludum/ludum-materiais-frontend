@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './Components/index.css';
+import App from './Login';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
 import { Route, BrowserRouter as Router } from 'react-router-dom';

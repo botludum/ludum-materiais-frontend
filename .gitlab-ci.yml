@@ -1,0 +1,41 @@
+variables:
+  LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE: $CI_REGISTRY_IMAGE/ludum-materiais-frontend
+
+unit_tests:
+  image: node:12.2.0
+  stage: test
+  before_script:
+    - npm install
+  script:
+    - npm test
+react_build:
+  image: node:12.2.0
+  stage: build
+  before_script:
+    - npm install
+  script:
+    - npm run-script build
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+    - docker build -f Dockerfile -t $LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE .
+    - docker push $LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE
+  only:
+    - /master/
+build-dev:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+    - docker build -f Dockerfile -t $LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE:dev .
+    - docker push $LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE:dev
+  only:
+    - /development/
