@@ -3,8 +3,19 @@ import ReactDOM from 'react-dom';
 import './Components/index.css';
 import App from './Login';
 import * as serviceWorker from './serviceWorker';
+import CadastrarTutorial from './CadastrarTutorial';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const routing = (
+  <Router>
+    <div>
+      <Route exact path="/" component={App} />
+      <Route path="/tutorial" component={CadastrarTutorial} />
+    </div>
+  </Router>
+)
+
+ReactDOM.render(routing, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
