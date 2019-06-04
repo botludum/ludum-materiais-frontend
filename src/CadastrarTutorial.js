@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+
+const SendButton = withStyles(theme => ({
+  root: {
+    color: theme.palette.getContrastText('#28bbff'),
+    backgroundColor: '#28bbff',
+    '&:hover': {
+      backgroundColor: '#28bbff',
+
+    },
+  },
+}))(Button);
 
 class CadastrarTutorial extends Component {
   constructor(props){
@@ -16,25 +29,29 @@ class CadastrarTutorial extends Component {
   }
 
   handleClick(event) {
-    var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
-    console.log("values",this.state.nomeTutorial,this.state.descricaoTutorial,this.state.nomeUsuario);
+    if (this.state.nomeTutorial === "") {
+      this.setState({error: true});
+    } else {
+      var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
 
-    var body = {
-    "title": this.state.nomeTutorial,
-    "description":this.state.descricaoTutorial,
-    "status": null,
+      var body = {
+      "title": this.state.nomeTutorial,
+      "description":this.state.descricaoTutorial,
+      "status": null,
+      }
+
+      axios.post(apiBaseUrl, body)
+     .then(function (response) {
+       console.log(response.status);
+       if(response.status === 200){
+        console.log("registration successfull");
+       }
+     })
+     .catch(function (error) {
+       console.log(error);
+     });
     }
 
-    axios.post(apiBaseUrl, body)
-   .then(function (response) {
-     console.log(response);
-     if(response.data.code === 200){
-      console.log("registration successfull");
-     }
-   })
-   .catch(function (error) {
-     console.log(error);
-   });
   }
 
   render() {
@@ -69,23 +86,34 @@ class CadastrarTutorial extends Component {
               style={style_descricao}
             />
             <br/>
+            <SendButton variant="contained"
+              disableRipple
+              color="primary"
+              onClick={(event) => this.handleClick(event)}
+              >
+              Enviar
+            </SendButton>
           </div>
-         </MuiThemeProvider>
+        </MuiThemeProvider>
+        <div>
       </div>
     );
   }
 }
 
+const style_bar = {
+  backgroundColor: '#63347f',
+  height: window.innerWidth * 0.03,
+};
+
 const style = {
   textAlign : 'center',
 };
 
-const style_button = {
-  textAlign : 'center',
-  primary : "#bd6eff"
-}
 const style_descricao = {
-  width : 800
+  width : window.innerWidth * 0.5,
+  marginTop: 20,
+  marginBottom: 20,
 }
 
 
