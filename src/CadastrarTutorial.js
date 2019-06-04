@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
 
 class CadastrarTutorial extends Component {
@@ -42,11 +42,15 @@ class CadastrarTutorial extends Component {
       <div>
         <MuiThemeProvider>
           <div style={style}>
-          <AppBar
-             style={{backgroundColor: '#bd6eff'}}
-             title="Cadastro do Tutorial"
-           />
-           <RaisedButton label="Enviar" primary={true} style={style_button} onClick={(event) => this.handleClick(event)} />
+            <AppBar
+              position="static"
+              style={style_bar}
+            >
+            <Typography variant="h5" color="inherit">
+              Cadastro do Tutorial
+            </Typography>
+            </AppBar>
+
             <TextField
               error={this.state.error}
               id="standard-name"
