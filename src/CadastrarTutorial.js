@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
-import RaisedButton from 'material-ui/RaisedButton';
 
 const SendButton = withStyles(theme => ({
   root: {
