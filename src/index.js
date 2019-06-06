@@ -4,6 +4,7 @@ import './Components/index.css';
 import App from './Login';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
+import GerenciaLinks from './GerenciaLinks';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 
 const routing = (
@@ -11,6 +12,7 @@ const routing = (
     <div>
       <Route exact path="/" component={App} />
       <Route path="/tutorial" component={CadastrarTutorial} />
+      <Route path="/gerencialinks" component={GerenciaLinks} />
     </div>
   </Router>
 )
