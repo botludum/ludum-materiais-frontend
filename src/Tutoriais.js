@@ -31,16 +31,16 @@ const StyledTableRow = withStyles(theme => ({
   },
 }))(TableRow);
 
-function createData(nome, dificuldade, status, autor, visualizar, aceitar, rejeitar) {
-  return { nome, dificuldade, status, autor, visualizar, aceitar, rejeitar };
+function createData(status, autor, visualizar, aceitar, rejeitar) {
+  return { status, autor, visualizar, aceitar, rejeitar };
 }
 
 const rows = [
-  createData('Flapy Bird', 'Facil', 'Pendente', 'Usuario'),
-  createData('Pong','Facil','Aprovado', 'Administrador'),
-  createData('Snake','Médio','Aprovado', 'Administrador'),
-  createData('Tetris','Dificil','Pendente', 'Usuario'),
-  createData('Juba','Dificil','Pendente', 'Usuario'),
+  createData('Pendente', 'Usuario'),
+  createData('Aprovado', 'Administrador'),
+  createData('Aprovado', 'Administrador'),
+  createData('Pendente', 'Usuario'),
+  createData('Pendente', 'Usuario'),
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -77,8 +77,6 @@ function Tutoriais() {
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              <StyledTableCell>TITULO DO TUTORIAL</StyledTableCell>
-              <StyledTableCell align="right">DIFICULDADE</StyledTableCell>
               <StyledTableCell align="right">STATUS</StyledTableCell>
               <StyledTableCell align="right">AUTOR</StyledTableCell>
               <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
@@ -88,11 +86,7 @@ function Tutoriais() {
           </TableHead>
           <TableBody>
             {rows.map(row => (
-              <StyledTableRow key={row.nome}>
-                <StyledTableCell component="th" scope="row">
-                  {row.nome}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.dificuldade}</StyledTableCell>
+              <StyledTableRow>
                 <StyledTableCell align="right">{row.status}</StyledTableCell>
                 <StyledTableCell align="right">{row.autor}</StyledTableCell>
                 <StyledTableCell align="right">{row.visualizar}
