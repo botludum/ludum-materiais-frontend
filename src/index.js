@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Components/index.css';
-import App from './Login';
+import Login from './Login';
 import Tutoriais from './Tutoriais';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
@@ -10,9 +10,9 @@ import { Route, BrowserRouter as Router } from 'react-router-dom';
 const routing = (
   <Router>
     <div>
-      <Route exact path="/" component={App} />
-      <Route path="/tutorial" component={CadastrarTutorial} />
-      <Route path="/tutorialshow" component={Tutoriais} />
+      <Route exact path="/" component={Login} />
+      <Route path="/tutorial/cadastrar" component={CadastrarTutorial} />
+      <Route path="/tutorial/listar" component={Tutoriais} />
     </div>
   </Router>
 )
