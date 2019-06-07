@@ -25,6 +25,7 @@ const initialState = {
   descricaoLink:'',
   nomeLinkError:'',
   tipoLinkError:'',
+  descricaoLinkError:'',
 }
 
 class CadastrarLink extends Component {
@@ -47,13 +48,23 @@ class CadastrarLink extends Component {
   validate = () => {
     let nomeLinkError = "";
     let tipoLinkError = "";
+    let descricaoLinkError = "";
 
     if (!this.state.nomeLink) {
       nomeLinkError = "Nome em branco";
     }
 
+    if (!this.state.descricaoLink) {
+      descricaoLinkError = "Descrição em branco";
+    }
+
     if (!this.state.tipoLink) {
       tipoLinkError = "Tipo em branco";
+    }
+
+     if (nomeLinkError || tipoLinkError || descricaoLinkError) {
+      this.setState({nomeLinkError, tipoLinkError, descricaoLinkError});
+      return false;
     }
 
     return true;
@@ -114,14 +125,18 @@ class CadastrarLink extends Component {
             <br/>
             <div style={error_style}>{this.state.tipoLinkError}</div>
             <TextField
+              error={this.state.descricaoLinkError !== ''}
+              name="descricaoLink"
               label="Adicione seu Link"
-              onChange = {(event) => this.setState({descricaoLink: event.target.value})}
+              value={this.state.descricaoLink || ''}
+              onChange={this.handleChange}
               multiline={true}
-              rowsMax = "1"
-              rows = "1"
+              rowsMax = "2"
+              rows = "5"
               variant="outlined"
               style={style_descricao}
             />
+            <div style={error_style}>{this.state.descricaoLinkError}</div>
             <br/>
             <SendButton variant="contained"
               disableRipple
