@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import './Components/gerencia.css';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -41,19 +42,6 @@ createData('Criando seu snake', 'Sítio virtual', 'Aprovado'),
 createData('O que é Pygame?', 'Fórum do Yahoo', 'Aprovado'),
 ];
 
-const style_root = {
-
-    width: '80%',
-    marginTop: '10%',
-    marginLeft: '10%',
-    overflowX: 'auto',
-};
-const style_table = {
-    minWidth: 700,
-};
-const style_button = {
-    marginTop: '10%',
-};
 
 
 class GerenciaLinks extends Component {
@@ -82,8 +70,8 @@ class GerenciaLinks extends Component {
             </MuiThemeProvider>
             <br/>
             <br/>
-            <Paper style = {style_root}>
-                <Table style = {style_table}>
+            <Paper className = "style_root">
+                <Table className = "style_table">
                 <TableHead>
                     <TableRow>
                     <StyledTableCell align="left">TITULO DO LINK</StyledTableCell>
@@ -103,17 +91,17 @@ class GerenciaLinks extends Component {
                         <StyledTableCell align="right">{row.type}</StyledTableCell>
                         <StyledTableCell align="right">{row.status}</StyledTableCell>
                         <StyledTableCell align="right">{row.link}
-                        <IconButton style={style_button} aria-label="Visualizar">
+                        <IconButton className="style_button" aria-label="Visualizar">
                             <VisibilityIcon />
                         </IconButton>
                         </StyledTableCell>
                         <StyledTableCell align="right">{row.aceitar}
-                        <IconButton style={style_button} aria-label="Aceitar">
+                        <IconButton className="style_button" aria-label="Aceitar">
                             <DoneIcon />
                         </IconButton>
                         </StyledTableCell>
                         <StyledTableCell align="right">{row.rejeitar}
-                        <IconButton style={style_button} aria-label="Rejeitar">
+                        <IconButton className="style_button" aria-label="Rejeitar">
                             <CloseIcon />
                         </IconButton>
                         </StyledTableCell>

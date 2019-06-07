@@ -1,0 +1,12 @@
+.style_root {
+    width: 80%;
+    margin-top: 10%;
+    margin-left: 10%;
+    overflow-x: auto;
+}
+.style_table {
+    min-width: 700;
+}
+.style_button {
+    margin-top: 10%;
+}
