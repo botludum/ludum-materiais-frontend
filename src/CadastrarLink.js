@@ -19,17 +19,17 @@ const SendButton = withStyles(theme => ({
   },
 }))(Button);
 
+const initialState = {
+  nomeLink:'',
+  tipoLink:'',
+  descricaoLink:'',
+  nomeLinkError:'',
+}
+
 class CadastrarLink extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      nomeLink:'',
-      tipoLink:'',
-      descricaoLink:'',
-      nomeUsuario:'',
-      modalIsOpen: false,
-      error: false,
-    }
+    this.state = initialState;
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -43,8 +43,33 @@ class CadastrarLink extends Component {
     this.setState({modalIsOpen: false});
   }
 
+  validate = () => {
+    let nomeLinkError = "";
+
+    if (!this.state.nomeLink) {
+      nomeLinkError = "Nome em branco";
+    }
+
+    return true;
+  };
+
   handleClick(event) {
-    console.log('Clicando');
+    const isValid = this.validate();
+    console.log(this.state);
+    console.log(isValid);
+    if (isValid) {
+      this.setState(initialState);
+    }
+  }
+
+  handleChange = (event) => {
+    const isCheckbox = event.target.type === "checkbox";
+
+    this.setState({
+      [event.target.name] : isCheckbox
+      ? event.target.checked
+      : event.target.value
+    })
   }
 
   render() {
@@ -61,13 +86,16 @@ class CadastrarLink extends Component {
             </Typography>
             </AppBar>
             <TextField
-              error={this.state.error}
+              error={this.state.nomeLinkError !== ''}
+              name="nomeLink"
               id="standard-name"
               label="Nome do Link"
-              onChange = {(event) => this.setState({nomeLink:event.target.value})}
+              value={this.state.nomeLink || ''}
+              onChange={this.handleChange}
               margin="normal"
             />
             <br/>
+            <div style={error_style}>{this.state.nomeLinkError}</div>
             <TextField
               error={this.state.error}
               id="standard-name"
@@ -125,6 +153,11 @@ const customStyles = {
   overlay: {
     backgroundColor: 'white',
   }
+};
+
+const error_style = {
+  fontSize: 15,
+  color: 'red',
 };
 
 const style_bar = {
