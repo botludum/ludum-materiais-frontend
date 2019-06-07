@@ -24,6 +24,7 @@ const initialState = {
   tipoLink:'',
   descricaoLink:'',
   nomeLinkError:'',
+  tipoLinkError:'',
 }
 
 class CadastrarLink extends Component {
@@ -45,9 +46,14 @@ class CadastrarLink extends Component {
 
   validate = () => {
     let nomeLinkError = "";
+    let tipoLinkError = "";
 
     if (!this.state.nomeLink) {
       nomeLinkError = "Nome em branco";
+    }
+
+    if (!this.state.tipoLink) {
+      tipoLinkError = "Tipo em branco";
     }
 
     return true;
@@ -97,13 +103,16 @@ class CadastrarLink extends Component {
             <br/>
             <div style={error_style}>{this.state.nomeLinkError}</div>
             <TextField
-              error={this.state.error}
+              error={this.state.tipoLinkError !== ''}
+              name="tipoLink"
               id="standard-name"
               label="Tipo(Ex: Livro, site..)"
-              onChange = {(event) => this.setState({tipoLink:event.target.value})}
+              value={this.state.tipoLink || ''}
+              onChange={this.handleChange}
               margin="normal"
             />
             <br/>
+            <div style={error_style}>{this.state.tipoLinkError}</div>
             <TextField
               label="Adicione seu Link"
               onChange = {(event) => this.setState({descricaoLink: event.target.value})}
