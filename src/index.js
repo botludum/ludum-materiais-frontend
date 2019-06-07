@@ -6,6 +6,7 @@ import Tutoriais from './Tutoriais';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+import CadastrarLink from './CadastrarLink';
 
 const routing = (
   <Router>
@@ -13,6 +14,7 @@ const routing = (
       <Route exact path="/" component={App} />
       <Route path="/tutorial" component={CadastrarTutorial} />
       <Route path="/tutorialshow" component={Tutoriais} />
+      <Route path="/link" component={CadastrarLink} />
     </div>
   </Router>
 )
