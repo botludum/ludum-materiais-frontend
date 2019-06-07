@@ -50,6 +50,9 @@ class CadastrarTutorial extends Component {
     if (!this.state.nomeTutorial) {
       nomeError = "Nome em branco";
     }
+    if (!this.state.descricaoTutorial) {
+      descricaoError = "Descrição em branco";
+    }
 
     if (nomeError || descricaoError) {
       this.setState({nomeError, descricaoError});
@@ -119,14 +122,18 @@ class CadastrarTutorial extends Component {
             <br/>
             <div style={error_style}>{this.state.nomeError}</div>
             <TextField
+              error={this.state.descricaoError !== ''}
+              name="descricaoTutorial"
               label="Escreva o seu tutorial"
-              onChange = {(event) => this.setState({descricaoTutorial: event.target.value})}
+              value = {this.state.descricaoTutorial || ''}
+              onChange = {this.handleChange}
               multiline={true}
               rowsMax = "20"
               rows = "15"
               variant="outlined"
               style={style_descricao}
             />
+            <div style={error_style}>{this.state.descricaoError}</div>
             <br/>
             <SendButton variant="contained"
               disableRipple
