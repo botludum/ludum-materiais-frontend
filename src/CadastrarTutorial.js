@@ -19,16 +19,17 @@ const SendButton = withStyles(theme => ({
   },
 }))(Button);
 
+const initialState = {
+  nomeTutorial: '',
+  descricaoTutorial: '',
+  nomeError: '',
+  descricaoError: '',
+};
+
 class CadastrarTutorial extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      nomeTutorial:'',
-      descricaoTutorial:'',
-      nomeUsuario:'',
-      modalIsOpen: false,
-      error: false,
-    }
+    this.state = initialState;
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -42,10 +43,25 @@ class CadastrarTutorial extends Component {
     this.setState({modalIsOpen: false});
   }
 
-  handleClick(event) {
-    if (this.state.nomeTutorial === "") {
-      this.setState({error: true});
-    } else {
+  validate = () => {
+    let nomeError = "";
+    let descricaoError = "";
+
+    if (!this.state.nomeTutorial) {
+      nomeError = "Nome em branco";
+    }
+
+    if (nomeError || descricaoError) {
+      this.setState({nomeError, descricaoError});
+      return false;
+    }
+
+    return true;
+  };
+
+  handleClick = () => {
+    const isValid = this.validate();
+    if (isValid) {
       var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
 
       var body = {
@@ -55,18 +71,28 @@ class CadastrarTutorial extends Component {
       }
 
       axios.post(apiBaseUrl, body)
-     .then(function (response) {
+     .then((response) => {
        console.log(response.status);
        if(response.status === 200){
         console.log("registration successfull");
+        this.setState(initialState);
        }
      })
-     .catch(function (error) {
+     .catch((error) => {
        console.log(error);
      });
     }
-
   }
+
+  handleChange = (event) => {
+    const isText = event.target.type === "checkbox";
+
+    this.setState({
+      [event.target.name] : isText
+      ? event.target.checked
+      : event.target.value
+    })
+  };
 
   render() {
     return (
@@ -83,13 +109,15 @@ class CadastrarTutorial extends Component {
             </AppBar>
 
             <TextField
-              error={this.state.error}
-              id="standard-name"
+              error={this.state.nomeError !== ''}
+              name="nomeTutorial"
               label="Nome do tutorial"
-              onChange = {(event) => this.setState({nomeTutorial:event.target.value})}
+              value = {this.state.nomeTutorial || ''}
+              onChange = {this.handleChange}
               margin="normal"
             />
             <br/>
+            <div style={error_style}>{this.state.nomeError}</div>
             <TextField
               label="Escreva o seu tutorial"
               onChange = {(event) => this.setState({descricaoTutorial: event.target.value})}
@@ -154,7 +182,12 @@ const style_descricao = {
   width : window.innerWidth * 0.5,
   marginTop: 20,
   marginBottom: 20,
-}
+};
+
+const error_style = {
+  fontSize: 15,
+  color: 'red',
+};
 
 
 export default CadastrarTutorial;
