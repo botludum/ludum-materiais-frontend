@@ -136,7 +136,7 @@ class CadastrarTutorial extends Component {
               position="static"
               style={style_bar}
             >
-            <Typography variant="h5" color="inherit">
+            <Typography variant="h5" color="inherit" style={{marginTop: "10px"}}>
               Cadastro do Tutorial
             </Typography>
             </AppBar>
@@ -195,7 +195,7 @@ class CadastrarTutorial extends Component {
 
 const style_bar = {
   backgroundColor: '#63347f',
-  height: window.innerWidth * 0.03,
+  height: window.innerWidth * 0.04,
 };
 
 const style = {

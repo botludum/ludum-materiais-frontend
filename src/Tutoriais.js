@@ -71,9 +71,7 @@ function Tutoriais() {
           <br/>
         </div>
     </MuiThemeProvider>
-    <br/>
-    <br/>
-      <Paper className={classes.root}>
+      <Paper className={classes.root} style={{marginTop: "10px"}}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
