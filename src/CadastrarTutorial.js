@@ -6,7 +6,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Modal from 'react-modal';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import './Components/Modal.css'
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -14,33 +16,38 @@ const SendButton = withStyles(theme => ({
     backgroundColor: '#28bbff',
     '&:hover': {
       backgroundColor: '#28bbff',
-
     },
   },
 }))(Button);
 
-const initialState = {
-  nomeTutorial: '',
-  descricaoTutorial: '',
-  nomeError: '',
-  descricaoError: '',
-};
+const Modal = ({ handleClose, show, children }) => {
+    const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+
+     return (
+      <div className={showHideClassName}>
+        <section className='modal-main'>
+          <IconButton
+            onClick={handleClose}
+            >
+            <CloseIcon />
+        </IconButton>
+            {children}
+        </section>
+      </div>
+    );
+  };
 
 class CadastrarTutorial extends Component {
   constructor(props){
     super(props);
-    this.state = initialState;
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
+    this.state = {
+      nomeTutorial: '',
+      descricaoTutorial: '',
+      nomeError: '',
+      descricaoError: '',
+      responseMessage: '',
+      show: false,
+    };
   }
 
   validate = () => {
@@ -65,7 +72,7 @@ class CadastrarTutorial extends Component {
   handleClick = () => {
     const isValid = this.validate();
     if (isValid) {
-      var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
+      var apiBaseUrl = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/cadastrar";
 
       var body = {
       "title": this.state.nomeTutorial,
@@ -78,13 +85,32 @@ class CadastrarTutorial extends Component {
        console.log(response.status);
        if(response.status === 200){
         console.log("registration successfull");
-        this.setState(initialState);
-       }
+        this.setState({
+          nomeTutorial: '',
+          descricaoTutorial: '',
+          nomeError: '',
+          descricaoError: '',
+          responseMessage: 'Tutorial enviado com sucesso',
+        });
+      } else {
+        this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'});
+      }
+      this.showModal();
      })
      .catch((error) => {
        console.log(error);
+       this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'});
+       this.showModal();
      });
     }
+  }
+
+  showModal = () => {
+   this.setState({ show: true });
+  }
+
+  hideModal = () => {
+   this.setState({ show: false });
   }
 
   handleChange = (event) => {
@@ -144,37 +170,18 @@ class CadastrarTutorial extends Component {
             </SendButton>
           </div>
         </MuiThemeProvider>
-        <div>
-      <Modal
-      isOpen={this.state.modalIsOpen}
-      onRequestClose={this.closeModal}
-      style={customStyles}
-      contentLabel="Example Modal"
-      >
-      Hello
-      </Modal>
-      </div>
+        <Modal
+        show={this.state.show}
+        handleClose={this.hideModal}
+        >
+          <div className = "modal-body">
+            {this.state.responseMessage}
+          </div>
+        </Modal>
       </div>
     );
   }
 }
-
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)',
-    width: window.innerWidth * 0.2,
-    height: window.innerHeight * 0.2,
-    backgroundColor: 'white',
-  },
-  overlay: {
-    backgroundColor: 'white',
-  }
-};
 
 const style_bar = {
   backgroundColor: '#63347f',
