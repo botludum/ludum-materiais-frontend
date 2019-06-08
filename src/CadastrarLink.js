@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import { withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
 import './Components/link.css';
 
@@ -18,6 +18,10 @@ const SendButton = withStyles(theme => ({
     },
   },
 }))(Button);
+
+const URLRegex = RegExp(
+  /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
+)
 
 const initialState = {
   nomeLink:'',
@@ -49,13 +53,16 @@ class CadastrarLink extends Component {
     let nomeLinkError = "";
     let tipoLinkError = "";
     let descricaoLinkError = "";
+    const testeRegex = URLRegex.test(this.state.descricaoLink);
 
     if (!this.state.nomeLink) {
       nomeLinkError = "Nome em branco";
     }
 
     if (!this.state.descricaoLink) {
-      descricaoLinkError = "Descrição em branco";
+      descricaoLinkError = "Link em branco";
+    } else if (!testeRegex) {
+      descricaoLinkError = "Link inválido"
     }
 
     if (!this.state.tipoLink) {
@@ -117,7 +124,7 @@ class CadastrarLink extends Component {
               error={this.state.tipoLinkError !== ''}
               name="tipoLink"
               id="standard-name"
-              label="Tipo(Ex: Livro, site..)"
+              label="Tipo (Livro, site, artigo...)"
               value={this.state.tipoLink || ''}
               onChange={this.handleChange}
               margin="normal"
