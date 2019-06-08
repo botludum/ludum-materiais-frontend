@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
+import axios from 'axios';
 import './Components/link.css';
 
 const SendButton = withStyles(theme => ({
@@ -23,19 +24,9 @@ const URLRegex = RegExp(
   /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
 )
 
-const initialState = {
-  nomeLink:'',
-  tipoLink:'',
-  descricaoLink:'',
-  nomeLinkError:'',
-  tipoLinkError:'',
-  descricaoLinkError:'',
-}
-
 class CadastrarLink extends Component {
   constructor(props){
     super(props);
-    this.state = initialState;
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -47,6 +38,14 @@ class CadastrarLink extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+    this.state = {
+      nomeLink:'',
+      tipoLink:'',
+      descricaoLink:'',
+      nomeLinkError:'',
+      tipoLinkError:'',
+      descricaoLinkError:'',
+    }
   }
 
   validate = () => {
@@ -79,10 +78,33 @@ class CadastrarLink extends Component {
 
   handleClick(event) {
     const isValid = this.validate();
-    console.log(this.state);
-    console.log(isValid);
     if (isValid) {
-      this.setState(initialState);
+      var apiBaseUrl = "https://produ-o.ludum-materiais.ludumbot.club/api/links/cadastrar";
+
+      var body = {
+      "title": this.state.nomeLink,
+      "type":this.state.tipoLink,
+      "link":this.state.descricaoLink,
+      "status": null,
+      }
+
+      axios.post(apiBaseUrl, body)
+     .then((response) => {
+       console.log(response.status);
+       if(response.status === 200){
+        this.setState({
+          nomeLink:'',
+          tipoLink:'',
+          descricaoLink:'',
+          nomeLinkError:'',
+          tipoLinkError:'',
+        });
+      } else {
+      }
+     })
+     .catch((error) => {
+       console.log(error);
+     });
     }
   }
 
