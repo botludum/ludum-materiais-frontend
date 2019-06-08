@@ -1,0 +1,12 @@
+.Fundo {
+  background-color: #bd6eff!important;
+  padding: 470px 40px;
+  overflow: auto;
+}
+
+.NavBar {
+  flexGrow: 1;
+  background-color: #63347f !important;
+  color: #63347f;
+  width: 100%;
+}
