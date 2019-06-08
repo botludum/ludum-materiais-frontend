@@ -8,6 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Components/link.css';
 
 const SendButton = withStyles(theme => ({
@@ -54,6 +55,7 @@ class CadastrarLink extends Component {
       descricaoLinkError:'',
       responseMessage:'',
       show: false,
+      loading: false,
     }
   }
 
@@ -96,7 +98,7 @@ class CadastrarLink extends Component {
       "link":this.state.descricaoLink,
       "status": null,
       }
-
+      this.setState({loading: true});
       axios.post(apiBaseUrl, body)
      .then((response) => {
        console.log(response.status);
@@ -109,6 +111,7 @@ class CadastrarLink extends Component {
           tipoLinkError:'',
           descricaoLinkError:'',
           responseMessage: 'Link enviado com sucesso',
+          loading: false,
         });
       } else {
         this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'})
@@ -117,7 +120,7 @@ class CadastrarLink extends Component {
      })
      .catch((error) => {
        console.log(error);
-       this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'})
+       this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde', loading: false})
        this.showModal();
      });
     }
@@ -190,13 +193,19 @@ class CadastrarLink extends Component {
             />
             <div style={error_style}>{this.state.descricaoLinkError}</div>
             <br/>
-            <SendButton variant="contained"
-              disableRipple
-              color="primary"
-              onClick={(event) => this.handleClick(event)}
-              >
-              Enviar
-            </SendButton>
+            {this.state.loading ?
+              (
+                <CircularProgress />
+              ) : (
+                <SendButton variant="contained"
+                  disableRipple
+                  color="primary"
+                  onClick={(event) => this.handleClick(event)}
+                  >
+                  Enviar
+                </SendButton>
+              )
+            }
           </div>
         </MuiThemeProvider>
         <Modal
