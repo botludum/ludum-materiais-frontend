@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Components/Modal.css'
 
 const SendButton = withStyles(theme => ({
@@ -47,6 +48,7 @@ class CadastrarTutorial extends Component {
       descricaoError: '',
       responseMessage: '',
       show: false,
+      loading: false,
     };
   }
 
@@ -78,8 +80,9 @@ class CadastrarTutorial extends Component {
       "title": this.state.nomeTutorial,
       "description":this.state.descricaoTutorial,
       "status": null,
-      }
+      };
 
+      this.setState({loading: true});
       axios.post(apiBaseUrl, body)
      .then((response) => {
        console.log(response.status);
@@ -91,9 +94,10 @@ class CadastrarTutorial extends Component {
           nomeError: '',
           descricaoError: '',
           responseMessage: 'Tutorial enviado com sucesso',
+          loading: false,
         });
       } else {
-        this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'});
+        this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde', loading: false});
       }
       this.showModal();
      })
@@ -161,13 +165,19 @@ class CadastrarTutorial extends Component {
             />
             <div style={error_style}>{this.state.descricaoError}</div>
             <br/>
-            <SendButton variant="contained"
-              disableRipple
-              color="primary"
-              onClick={(event) => this.handleClick(event)}
-              >
-              Enviar
-            </SendButton>
+            {this.state.loading ?
+              (
+                <CircularProgress />
+              ) : (
+                <SendButton variant="contained"
+                  disableRipple
+                  color="primary"
+                  onClick={(event) => this.handleClick(event)}
+                  >
+                  Enviar
+                </SendButton>
+              )
+            }
           </div>
         </MuiThemeProvider>
         <Modal
