@@ -32,6 +32,10 @@ const StyledTableRow = withStyles(theme => ({
     },
 }))(TableRow);
 
+const customStyles = {
+    overlay: {zIndex: 1000}
+  };
+
 function createData(title, type, status , link, accept, reject) {
 return { title, type, status, link, accept, reject };
 }
@@ -42,6 +46,22 @@ createData('Criando seu snake', 'Sítio virtual', 'Aprovado'),
 createData('O que é Pygame?', 'Fórum do Yahoo', 'Aprovado'),
 ];
 
+const Modal = ({ handleClose, show, children }) => {
+    const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+  
+    return (
+      <div className={showHideClassName}>
+        <section className='modal-main'>
+          <IconButton 
+            onClick={handleClose}
+            >
+            <CloseIcon />
+        </IconButton>
+            {children}
+        </section>
+      </div>
+    );
+  };
 
 
 class GerenciaLinks extends Component {
@@ -52,9 +72,16 @@ class GerenciaLinks extends Component {
             tipoLink:'',
             statusLink:'',
             modalIsOpen: false,
+            show: false,
             error: false,
         }
     }
+    showModal = () => {
+        this.setState({ show: true });
+      }    
+    hideModal = () => {
+        this.setState({ show: false });
+      }
 
     render() {
         return (
@@ -91,7 +118,14 @@ class GerenciaLinks extends Component {
                         <StyledTableCell align="right">{row.type}</StyledTableCell>
                         <StyledTableCell align="right">{row.status}</StyledTableCell>
                         <StyledTableCell align="right">{row.link}
-                        <IconButton className="style_button" aria-label="Visualizar">
+                        <Modal show={this.state.show} handleClose={this.hideModal} >
+                            <div className = "modal-body">
+                                <p ><b>Titulo:</b></p>
+                                <p ><b>Tipo:</b></p>
+                                <p ><b>Link:</b></p>
+                            </div>
+                        </Modal>
+                        <IconButton className="style_button" aria-label="Visualizar" onClick={this.showModal}>
                             <VisibilityIcon />
                         </IconButton>
                         </StyledTableCell>
