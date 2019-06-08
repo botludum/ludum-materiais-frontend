@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './Components/index.css';
-import App from './Login';
+import Login from './Login';
 import Tutoriais from './Tutoriais';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
@@ -11,10 +11,10 @@ import CadastrarLink from './CadastrarLink';
 const routing = (
   <Router>
     <div>
-      <Route exact path="/" component={App} />
-      <Route path="/tutorial" component={CadastrarTutorial} />
-      <Route path="/tutorialshow" component={Tutoriais} />
-      <Route path="/link" component={CadastrarLink} />
+      <Route exact path="/" component={Login} />
+      <Route path="/link/cadastrar" component={CadastrarLink} />
+      <Route path="/tutorial/cadastrar" component={CadastrarTutorial} />
+      <Route path="/tutorial/listar" component={Tutoriais} />
     </div>
   </Router>
 )
