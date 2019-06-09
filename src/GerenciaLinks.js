@@ -32,9 +32,6 @@ const StyledTableRow = withStyles(theme => ({
     },
 }))(TableRow);
 
-const customStyles = {
-    overlay: {zIndex: 1000}
-  };
 
 function createData(title, type, status , link, accept, reject) {
 return { title, type, status, link, accept, reject };
