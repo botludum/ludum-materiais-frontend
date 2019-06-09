@@ -16,7 +16,7 @@ class SignInForm extends Component {
 
     componentWillMount(){
       if(this.Auth.loggedIn())
-        this.props.history.push('/tutorial/listar');
+        this.props.history.push('/link/gerenciar');
     }
 
     handleSubmit(e) {
@@ -24,7 +24,7 @@ class SignInForm extends Component {
       console.log(this.state.username);
       this.Auth.login(this.state.username,this.state.password)
           .then(res =>{
-            this.props.history.push('/tutorial/listar');
+            this.props.history.push('/link/gerenciar');
           })
           .catch(err =>{
               alert(err);
