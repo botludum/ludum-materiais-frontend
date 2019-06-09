@@ -5,7 +5,10 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Modal from 'react-modal';
+import axios from 'axios';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Components/link.css';
 
 const SendButton = withStyles(theme => ({
@@ -19,34 +22,41 @@ const SendButton = withStyles(theme => ({
   },
 }))(Button);
 
+const Modal = ({ handleClose, show, children }) => {
+    const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+
+    return (
+      <div className={showHideClassName}>
+        <section className='modal-main'>
+          <IconButton
+            onClick={handleClose}
+            >
+            <CloseIcon />
+        </IconButton>
+            {children}
+        </section>
+      </div>
+    );
+  };
+
 const URLRegex = RegExp(
   /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/g
 )
 
-const initialState = {
-  nomeLink:'',
-  tipoLink:'',
-  descricaoLink:'',
-  nomeLinkError:'',
-  tipoLinkError:'',
-  descricaoLinkError:'',
-}
-
 class CadastrarLink extends Component {
   constructor(props){
     super(props);
-    this.state = initialState;
-
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
-
-  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
+    this.state = {
+      nomeLink:'',
+      tipoLink:'',
+      descricaoLink:'',
+      nomeLinkError:'',
+      tipoLinkError:'',
+      descricaoLinkError:'',
+      responseMessage:'',
+      show: false,
+      loading: false,
+    }
   }
 
   validate = () => {
@@ -79,10 +89,40 @@ class CadastrarLink extends Component {
 
   handleClick(event) {
     const isValid = this.validate();
-    console.log(this.state);
-    console.log(isValid);
     if (isValid) {
-      this.setState(initialState);
+      var apiBaseUrl = "https://produ-o.ludum-materiais.ludumbot.club/api/links/cadastrar";
+
+      var body = {
+      "title": this.state.nomeLink,
+      "type":this.state.tipoLink,
+      "link":this.state.descricaoLink,
+      "status": null,
+      }
+      this.setState({loading: true});
+      axios.post(apiBaseUrl, body)
+     .then((response) => {
+       console.log(response.status);
+       if(response.status === 200){
+        this.setState({
+          nomeLink:'',
+          tipoLink:'',
+          descricaoLink:'',
+          nomeLinkError:'',
+          tipoLinkError:'',
+          descricaoLinkError:'',
+          responseMessage: 'Link enviado com sucesso',
+          loading: false,
+        });
+      } else {
+        this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde'})
+      }
+      this.showModal();
+     })
+     .catch((error) => {
+       console.log(error);
+       this.setState({responseMessage: 'Algo deu errado, tente novamente mais tarde', loading: false})
+       this.showModal();
+     });
     }
   }
 
@@ -94,6 +134,14 @@ class CadastrarLink extends Component {
       ? event.target.checked
       : event.target.value
     })
+  }
+
+  showModal = () => {
+    this.setState({ show: true });
+  }
+
+  hideModal = () => {
+    this.setState({ show: false });
   }
 
   render() {
@@ -145,46 +193,33 @@ class CadastrarLink extends Component {
             />
             <div style={error_style}>{this.state.descricaoLinkError}</div>
             <br/>
-            <SendButton variant="contained"
-              disableRipple
-              color="primary"
-              onClick={(event) => this.handleClick(event)}
-              >
-              Enviar
-            </SendButton>
+            {this.state.loading ?
+              (
+                <CircularProgress />
+              ) : (
+                <SendButton variant="contained"
+                  disableRipple
+                  color="primary"
+                  onClick={(event) => this.handleClick(event)}
+                  >
+                  Enviar
+                </SendButton>
+              )
+            }
           </div>
         </MuiThemeProvider>
-        <div>
-      <Modal
-      isOpen={this.state.modalIsOpen}
-      onRequestClose={this.closeModal}
-      style={customStyles}
-      contentLabel="Example Modal"
-      >
-      Hello
-      </Modal>
-      </div>
+        <Modal
+          show={this.state.show}
+          handleClose={this.hideModal}
+        >
+        <div className = "modal-body">
+        {this.state.responseMessage}
+        </div>
+        </Modal>
       </div>
     );
   }
 }
-
-const customStyles = {
-  content : {
-
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)',
-    width: window.innerWidth * 0.2,
-    height: window.innerHeight * 0.2,
-    backgroundColor: 'white',
-  },
-  overlay: {
-    backgroundColor: 'white',
-  }
-};
 
 const error_style = {
   fontSize: 15,
