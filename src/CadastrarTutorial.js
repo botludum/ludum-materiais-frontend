@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from 'react-modal';
+import { withRouter } from 'react-router-dom';
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -157,4 +158,4 @@ const style_descricao = {
 }
 
 
-export default CadastrarTutorial;
+export default withRouter(CadastrarTutorial);

@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import { withRouter } from 'react-router-dom';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -119,4 +120,4 @@ const style = {
   textAlign : 'center',
 };
 
-export default Tutoriais;
+export default withRouter(Tutoriais);
