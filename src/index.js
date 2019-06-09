@@ -6,11 +6,13 @@ import Tutoriais from './Tutoriais';
 import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
+import CadastrarLink from './CadastrarLink';
 
 const routing = (
   <Router>
     <div>
       <Route exact path="/" component={Login} />
+      <Route path="/link/cadastrar" component={CadastrarLink} />
       <Route path="/tutorial/cadastrar" component={CadastrarTutorial} />
       <Route path="/tutorial/listar" component={Tutoriais} />
     </div>
