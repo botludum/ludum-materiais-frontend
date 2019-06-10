@@ -90,6 +90,12 @@ class Tutoriais extends Component{
     })
   }
 
+  handleRejeitar(event,id){
+    fetch(this.url + id + '/N',{
+      method: "PUT"
+    })
+  }
+
   handleClick(event,nome,descricao){
     if(this.state.show){
       this.hideModal();
@@ -210,7 +216,7 @@ class Tutoriais extends Component{
                       </IconButton>
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.rejeitar}
-                      <IconButton className={classes.button} aria-label="Rejeitar">
+                      <IconButton className={classes.button} aria-label="Rejeitar" onClick = {this.handleRejeitar(row._id)}>
                         <CloseIcon />
                       </IconButton>
                     </this.StyledTableCell>
