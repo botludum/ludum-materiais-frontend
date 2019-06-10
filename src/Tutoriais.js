@@ -53,11 +53,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 
   const rows = [
-    createData('Flapy Bird','Pendente', 'Usuario'),
-    createData('jjestaqui','Aprovado', 'Administrador'),
-    createData('Snake','Aprovado', 'Administrador'),
-    createData('Tetris','Pendente', 'Usuario'),
-    createData('Juba','Pendente', 'Usuario'),
+    state.items(item => (
+      createData(item.title,item.status,item._id)
+    ))
   ];
 
 
@@ -86,7 +84,7 @@ import CloseIcon from '@material-ui/icons/Close';
             <AppBar
               style={{backgroundColor: '#63347f'}}
               title="Tutoriais"
-            />
+             />
             <br/>
           </div>
       </MuiThemeProvider>
@@ -105,24 +103,24 @@ import CloseIcon from '@material-ui/icons/Close';
               </TableRow>
             </TableHead>
             <TableBody>
-              {state.items.map(item => (
-                <StyledTableRow key={item._id}>
+              {rows.map(row => (
+                <StyledTableRow key={row.nome}>
                   <StyledTableCell component="th" scope="row">
-                    {item.title}
+                    {row.nome}
                   </StyledTableCell>
-                  <StyledTableCell align="right">{item.status}</StyledTableCell>
-                  <StyledTableCell align="right">{item._id}</StyledTableCell>
-                  <StyledTableCell align="right">{"visualizar"}
+                  <StyledTableCell align="right">{row.status}</StyledTableCell>
+                  <StyledTableCell align="right">{row.autor}</StyledTableCell>
+                  <StyledTableCell align="right">{row.visualizar}
                     <IconButton className={classes.button} aria-label="Visualizar">
                       <VisibilityIcon />
                     </IconButton>
                   </StyledTableCell>
-                  <StyledTableCell align="right">{"aceitar"}
+                  <StyledTableCell align="right">{row.aceitar}
                     <IconButton className={classes.button} aria-label="Aceitar">
                       <DoneIcon />
                     </IconButton>
                   </StyledTableCell>
-                  <StyledTableCell align="right">{"rejeitar"}
+                  <StyledTableCell align="right">{row.rejeitar}
                     <IconButton className={classes.button} aria-label="Rejeitar">
                       <CloseIcon />
                     </IconButton>
@@ -135,7 +133,7 @@ import CloseIcon from '@material-ui/icons/Close';
       </div>
     )
   }
-
+  
   const style = {
     textAlign : 'center',
   };
