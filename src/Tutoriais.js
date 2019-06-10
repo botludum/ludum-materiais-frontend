@@ -18,11 +18,11 @@ import { create } from 'domain';
   var items= [];
   
 
-  const url = "https://jasonplaceholder.typicode.com/posts/"
+  const url = "https://ludum-materiais.herokuapp.com/api/tutoriais/"
 
   function buscaEP(url,items){
     var result = [];
-    fetch('https://jasonplaceholder.typicode.com/posts/')
+    fetch('https://ludum-materiais.herokuapp.com/api/tutoriais/')
           .then(data => data.json())
           .catch(err => {result.push(createData("3","4","5"))})
           .then(json => function (json){
