@@ -1,6 +1,4 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +10,9 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
-import { withRouter } from 'react-router-dom';
+import NavBar from './helpers/navbar';
+import withAuth from './services/withAuth';
+import Typography from '@material-ui/core/Typography';
 
 const StyledTableCell = withStyles(theme => ({
   head: {
@@ -63,16 +63,11 @@ function Tutoriais() {
   const classes = useStyles();
   return (
     <div> 
-      <MuiThemeProvider>
-        <div style={style}>
-          <AppBar
-            style={{backgroundColor: '#63347f'}}
-            title="Tutoriais"
-           />
-          <br/>
-        </div>
-    </MuiThemeProvider>
-      <Paper className={classes.root} style={{marginTop: "10px"}}>
+      <NavBar></NavBar>
+      <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
+        Gerenciar Tutorial
+      </Typography>
+      <Paper className={classes.root} style={{marginTop: "30px"}}>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -116,8 +111,4 @@ function Tutoriais() {
   )
 }
 
-const style = {
-  textAlign : 'center',
-};
-
-export default withRouter(Tutoriais);
+export default withAuth(Tutoriais);

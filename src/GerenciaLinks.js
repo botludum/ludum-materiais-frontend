@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import './Components/gerencia.css';
 import AuthService from './services/AuthService';
 import NavBar from './helpers/navbar';
-import { withRouter } from 'react-router-dom';
+import withAuth from './services/withAuth';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -94,7 +94,7 @@ class GerenciaLinks extends Component {
             <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
               Gerenciar Links
             </Typography>
-            <Paper className = "style_root">
+            <Paper className = "style_root" style={{marginTop: "30px"}}>
                 <Table className = "style_table">
                 <TableHead>
                     <TableRow>
@@ -145,4 +145,4 @@ class GerenciaLinks extends Component {
         );
     }
     }
-export default withRouter(GerenciaLinks);
+export default withAuth(GerenciaLinks);
