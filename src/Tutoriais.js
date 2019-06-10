@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -13,110 +13,128 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 
-const StyledTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: '#28BBFF',
-    color: theme.palette.common.black,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
+class Tutoriais extends Component{
 
-const StyledTableRow = withStyles(theme => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.default,
+  constructor(props){
+    super(props);
+    this.state={
+      items: [],
+    }
+  }
+
+  url = "https://ludum-materiais.herokuapp.com/api/tutoriais";
+
+  componentDidMount(){
+    fetch(this.url)
+      .then(res => res.json())
+      .then(json =>{
+        this.setState({
+          items: json,
+        })
+      });
+  }
+  
+  StyledTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: '#28BBFF',
+      color: theme.palette.common.black,
     },
-  },
-}))(TableRow);
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
 
-function createData(nome, status, autor, visualizar, aceitar, rejeitar) {
-  return { nome, status, autor, visualizar, aceitar, rejeitar };
-}
+  StyledTableRow = withStyles(theme => ({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.background.default,
+      },
+    },
+  }))(TableRow);
 
-const rows = [
-  createData('Flapy Bird','Pendente', 'Usuario'),
-  createData('Pong','Aprovado', 'Administrador'),
-  createData('Snake','Aprovado', 'Administrador'),
-  createData('Tetris','Pendente', 'Usuario'),
-  createData('Juba','Pendente', 'Usuario'),
-];
+  useStyles = makeStyles(theme => ({
+    root: {
+      width: '80%',
+      marginTop: '10%',
+      marginLeft: '10%',
+      overflowX: 'auto',
+    },
+    table: {
+      minWidth: 700,
+    },
+    button: {
+      marginTop: '10%',
+    },
+  }));
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '80%',
-    marginTop: '10%',
-    marginLeft: '10%',
-    overflowX: 'auto',
-  },
-  table: {
-    minWidth: 700,
-  },
-  button: {
-    marginTop: '10%',
-  },
-}));
+  style = {
+    textAlign : 'center',
+  };
+  render() {
 
-function Tutoriais() {
-  const classes = useStyles();
-  return (
-    <div> 
-      <MuiThemeProvider>
-        <div style={style}>
-          <AppBar
-            style={{backgroundColor: '#63347f'}}
-            title="Tutoriais"
-           />
-          <br/>
-        </div>
-    </MuiThemeProvider>
-      <Paper className={classes.root} style={{marginTop: "10px"}}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell align="left">TITULO DO TUTORIAL</StyledTableCell>
-              <StyledTableCell align="right">STATUS</StyledTableCell>
-              <StyledTableCell align="right">AUTOR</StyledTableCell>
-              <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
-              <StyledTableCell align="right">APROVAR</StyledTableCell>
-              <StyledTableCell align="right">REJEITAR</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <StyledTableRow key={row.nome}>
-                <StyledTableCell component="th" scope="row">
-                  {row.nome}
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.status}</StyledTableCell>
-                <StyledTableCell align="right">{row.autor}</StyledTableCell>
-                <StyledTableCell align="right">{row.visualizar}
-                  <IconButton className={classes.button} aria-label="Visualizar">
-                    <VisibilityIcon />
-                  </IconButton>
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.aceitar}
-                  <IconButton className={classes.button} aria-label="Aceitar">
-                    <DoneIcon />
-                  </IconButton>
-                </StyledTableCell>
-                <StyledTableCell align="right">{row.rejeitar}
-                  <IconButton className={classes.button} aria-label="Rejeitar">
-                    <CloseIcon />
-                  </IconButton>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Paper>
-    </div>
-  )
-}
+    var {items} = this.state;
 
-const style = {
-  textAlign : 'center',
-};
+    const classes = this.useStyles();
+    return (
+      <div> Peery </div>,
 
-export default Tutoriais;
+      <div> 
+        <MuiThemeProvider>
+          <div style={this.style}>
+            <AppBar
+              style={{backgroundColor: '#63347f'}}
+              title="Tutoriais"
+            />
+            <br/>
+          </div>
+      </MuiThemeProvider>
+      <br/>
+      <br/>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
+                <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
+                <this.StyledTableCell align="right">AUTOR</this.StyledTableCell>
+                <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
+                <this.StyledTableCell align="right">APROVAR</this.StyledTableCell>
+                <this.StyledTableCell align="right">REJEITAR</this.StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map(item => (
+                <this.StyledTableRow key={item._id}>
+                  <this.StyledTableCell component="th" scope="row">
+                    {item.title}
+                  </this.StyledTableCell>
+                  <this.StyledTableCell align="right">{item.status}</this.StyledTableCell>
+                  <this.StyledTableCell align="right">{item._id}</this.StyledTableCell>
+                  <this.StyledTableCell align="right">{"visualizar"}
+                    <IconButton className={classes.button} aria-label="Visualizar">
+                      <VisibilityIcon />
+                    </IconButton>
+                  </this.StyledTableCell>
+                  <this.StyledTableCell align="right">{"aceitar"}
+                    <IconButton className={classes.button} aria-label="Aceitar">
+                      <DoneIcon />
+                    </IconButton>
+                  </this.StyledTableCell>
+                  <this.StyledTableCell align="right">{"rejeitar"}
+                    <IconButton className={classes.button} aria-label="Rejeitar">
+                      <CloseIcon />
+                    </IconButton>
+                  </this.StyledTableCell>
+                </this.StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
+    )
+  }
+
+
+  }
+
+  export default Tutoriais;
