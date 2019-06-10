@@ -50,6 +50,12 @@ class Tutoriais extends Component{
       data: this.buscaEP(),
     })
   }
+
+  items= [];
+
+  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
+
+  rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}];  //Atributo que preenche a tabela dos tutoriais
   
   descricaoModal = '';
 
@@ -58,45 +64,31 @@ class Tutoriais extends Component{
     console.log(descricao);
   } 
 
-  items= [];
-
-  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
-
-  rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}]; 
-
-  showModal = () => {
-    this.setState({ show: true });
-  }
-  
-  hideModal = () => {
-    this.setState({ show: false });
-  }
-  
   createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
     return { nome, status, autor, descricao, visualizar, aceitar, rejeitar };
   }
   
-  showModal = () => {
+  showModal = () => { //Abre o modal
     this.setState({ show: true,});
   }
 
-  hideModal = () => {
+  hideModal = () => { //Fecha o modal
     this.setState({ show: false });
   }
 
-  handleAceitar(event,id){
+  handleAceitar(event,id){ //Aceita o tutorial
     fetch(this.url+ id +'/S',{
       method: "PUT"
     })
   }
 
-  handleRejeitar(event,id){
+  handleRejeitar(event,id){ //Recusa o tutorial
     fetch(this.url + id + '/N',{
       method: "PUT"
     })
   }
 
-  handleClick(event,nome,descricao){
+  handleClick(event,nome,descricao){ //Abre o modal se estiver fechado e fecha o modal se estiver aberto
     if(this.state.show){
       this.hideModal();
     }
@@ -105,6 +97,36 @@ class Tutoriais extends Component{
       this.showModal();
     }
   }
+
+  buscaEP(){
+    var status = ''
+    console.log("Busca");
+    fetch(this.url,{  //Acessa a API do ludum
+      method: "GET"
+    })
+          .then((res) => {
+            res.json().then((json) => {
+                json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
+                  if(element.status == 'S'){
+                    status = 'Aceito'
+                  }
+                  else if(element.status == 'N'){
+                    status = 'Recusado'
+                  }
+                  else{
+                    status = 'Pendente'
+                  }
+                  this.rows.push(this.createData(element.title,status,element._id,element.description))
+                });
+                this.setState({
+                  okay: true
+                })
+            })
+          })
+
+    };
+  
+  //Estilos da tabela
   StyledTableCell = withStyles(theme => ({
     head: {
       backgroundColor: '#28BBFF',
@@ -140,36 +162,7 @@ class Tutoriais extends Component{
   }));
 
   
-
-  buscaEP(){
-    var status = ''
-    console.log("Busca");
-    fetch(this.url,{
-      method: "GET"
-    })
-          .then((res) => {
-            res.json().then((json) => {
-                json.data.forEach(element => {
-                  if(element.status == 'S'){
-                    status = 'Aceito'
-                  }
-                  else if(element.status == 'N'){
-                    status = 'Recusado'
-                  }
-                  else{
-                    status = 'Pendente'
-                  }
-                  this.rows.push(this.createData(element.title,status,element._id,element.description))
-                });
-                this.setState({
-                  okay: true
-                })
-            })
-          })
-
-    };
-  
-    render(){
+    render(){ //Renderiza a tela caso tenha carregado as informações da api
       const classes = this.useStyles;
       if(this.state.okay)return (
         <div> 
