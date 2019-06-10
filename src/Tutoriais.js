@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
+import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -13,39 +14,31 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import { create } from 'domain';
-import Button from '@material-ui/core/Button';
-import Modal from 'react-modal';
 
-class Tutoriais extends Component{
+  var items= [];
+  
 
-  constructor(){
-    super();
-    this.handleShow = this.handleShow.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-      this.state = {
-        data: [],
-        okay: false,
-        show: false
-        }
+  const url = "https://jasonplaceholder.typicode.com/posts/"
+
+  function buscaEP(url,items){
+    var result = [];
+    fetch('https://jasonplaceholder.typicode.com/posts/')
+          .then(data => data.json())
+          .catch(err => {result.push(createData("3","4","5"))})
+          .then(json => function (json){
+            var i;
+            var item = json;
+            for(i=0;i<item.data.length;i++){
+              result.push(createData(item.data[i].title,item.data[i].status,item.data[i]._id))
+            }
+          })
+
+      result.push(createData("2","2","3"));
+      return result;
+
     }
-
-  componentDidMount(){
-    this.setState({
-      data: this.buscaEP(),
-    })
-  }
   
-  items= [];
-
-  url = ""
-
-  rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}]; 
-  
-  createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
-    return { nome, status, autor, descricao, visualizar, aceitar, rejeitar };
-  }
-  
-  StyledTableCell = withStyles(theme => ({
+  const StyledTableCell = withStyles(theme => ({
     head: {
       backgroundColor: '#28BBFF',
       color: theme.palette.common.black,
@@ -55,7 +48,7 @@ class Tutoriais extends Component{
     },
   }))(TableCell);
 
-  StyledTableRow = withStyles(theme => ({
+  const StyledTableRow = withStyles(theme => ({
     root: {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.background.default,
@@ -63,8 +56,15 @@ class Tutoriais extends Component{
     },
   }))(TableRow);
 
+  function createData(nome, status, autor, visualizar, aceitar, rejeitar) {
+    return { nome, status, autor, visualizar, aceitar, rejeitar };
+  }
 
-  useStyles = makeStyles(theme => ({
+
+  const rows = buscaEP(url,items)
+
+
+  const useStyles = makeStyles(theme => ({
     root: {
       width: '80%',
       marginTop: '10%',
@@ -79,123 +79,66 @@ class Tutoriais extends Component{
     },
   }));
 
-  
-  handleClose() {
-    this.setState({ show: false });
+  function Tutoriais() {
+    const classes = useStyles();
+    return (
+      <div> 
+        <MuiThemeProvider>
+          <div style={style}>
+            <AppBar
+              style={{backgroundColor: '#63347f'}}
+              title="Tutoriais"
+             />
+            <br/>
+          </div>
+      </MuiThemeProvider>
+      <br/>
+      <br/>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">TITULO DO TUTORIAL</StyledTableCell>
+                <StyledTableCell align="right">STATUS</StyledTableCell>
+                <StyledTableCell align="right">AUTOR</StyledTableCell>
+                <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
+                <StyledTableCell align="right">APROVAR</StyledTableCell>
+                <StyledTableCell align="right">REJEITAR</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <StyledTableRow key={row.nome}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.nome}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.status}</StyledTableCell>
+                  <StyledTableCell align="right">{row.autor}</StyledTableCell>
+                  <StyledTableCell align="right">{row.visualizar}
+                    <IconButton className={classes.button} aria-label="Visualizar">
+                      <VisibilityIcon />
+                    </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.aceitar}
+                    <IconButton className={classes.button} aria-label="Aceitar">
+                      <DoneIcon />
+                    </IconButton>
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{row.rejeitar}
+                    <IconButton className={classes.button} aria-label="Rejeitar">
+                      <CloseIcon />
+                    </IconButton>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      </div>
+    )
   }
-
-  handleShow() {
-    this.setState({ show: true });
-  }
-
-  buscaEP(url){
-    console.log("Busca");
-    var result = [];
-    fetch('https://ludum-materiais.herokuapp.com/api/tutoriais/',{
-      method: "GET"
-    })
-          .then((res) => {
-            res.json().then((json) => {
-              console.log(json);
-              json.data.forEach(element => {
-                console.log(element.title)
-                this.rows.push(this.createData(element.title,element.status,element._id,element.deion))
-              });
-              this.setState({
-                okay: true
-              })
-              console.log("row");
-              console.log(this.rows)
-            })
-          })
-
-    };
   
-    render(){
-      const classes = this.useStyles;
-      console.log("RENDEEEEER");
-      console.log(this.rows);
-      if(this.state.okay)return (
-        <div> 
-          <MuiThemeProvider>
-            <div style={style}>
-              <AppBar
-                style={{backgroundColor: '#63347f'}}
-                title="Tutoriais"
-               />
-              <br/>
-            </div>
-        </MuiThemeProvider>
-        <br/>
-        <br/>
-          <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
-                  <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
-                  <this.StyledTableCell align="right">AUTOR</this.StyledTableCell>
-                  <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
-                  <this.StyledTableCell align="right">APROVAR</this.StyledTableCell>
-                  <this.StyledTableCell align="right">REJEITAR</this.StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.rows.map(row => (
-                  <this.StyledTableRow key={row.autor}>
-                    <this.StyledTableCell component="th" scope="row">
-                      {row.nome}
-                    </this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.autor}</this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.visualizar}
-                      <IconButton className={classes.button} aria-label="Visualizar" onClick ={this.handleShow}>
-                        <VisibilityIcon />
-                      </IconButton>
-                      <Modal show={this.state.show} onHide={this.handleClose}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Modal heading</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                          </Button>
-                          <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
-
-                    </this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.aceitar}
-                      <IconButton className={classes.button} aria-label="Aceitar">
-                        <DoneIcon />
-                      </IconButton>
-                    </this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.rejeitar}
-                      <IconButton className={classes.button} aria-label="Rejeitar">
-                        <CloseIcon />
-                      </IconButton>
-                    </this.StyledTableCell>
-                  </this.StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
-        </div>
-      )
-      else{
-        console.log("teste");
-        return(
-          <div> CARREGANDO INFORMAÇÕES </div>
-        )
-      
-      }
-    }
-}
   const style = {
     textAlign : 'center',
   };
-
   export default Tutoriais;
