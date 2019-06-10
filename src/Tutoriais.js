@@ -13,6 +13,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 
+
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
@@ -76,19 +77,20 @@ class Tutoriais extends Component{
   }
   
   showModal = () => {
-    this.setState({ show: true, nome: 'arroz' });
+    this.setState({ show: true,});
   }
 
   hideModal = () => {
     this.setState({ show: false });
   }
 
-  handleClick(event,descricao){
+
+  handleClick(event,nome,descricao){
     if(this.state.show){
       this.hideModal();
     }
     else{
-      this.setState({descricao: descricao});
+      this.setState({nome: nome,descricao: descricao});
       this.showModal();
     }
   }
@@ -130,19 +132,17 @@ class Tutoriais extends Component{
 
   buscaEP(url){
     console.log("Busca");
-    var result = [];
     fetch('https://ludum-materiais.herokuapp.com/api/tutoriais/',{
       method: "GET"
     })
           .then((res) => {
             res.json().then((json) => {
-              json.data.forEach(element => {
-                this.rows.push(this.createData(element.title,element.status,element._id,element.deion))
-              });
-              this.setState({
-                okay: true
-              })
-              console.log(this.rows)
+                json.data.forEach(element => {
+                  this.rows.push(this.createData(element.title,element.status,element._id,element.deion))
+                });
+                this.setState({
+                  okay: true
+                })
             })
           })
 
@@ -184,7 +184,7 @@ class Tutoriais extends Component{
                     <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.autor}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.visualizar}
-                      <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.descricao)} >
+                      <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.nome,row.descricao)} >
 
                         <VisibilityIcon />
                       </IconButton>
@@ -207,6 +207,9 @@ class Tutoriais extends Component{
                 show={this.state.show}
                 handleClose={this.hideModal}
               >
+              <div className = "modal-head">
+                  {this.state.nome}
+              </div>
               <div className = "modal-body">
               {this.state.descricao}
               </div>
