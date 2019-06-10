@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -13,28 +13,22 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 
-class Tutoriais extends Component{
 
-  constructor(props){
-    super(props);
-    this.state={
-      items: [],
-    }
+  var state={
+    items: [],
   }
 
-  url = "https://ludum-materiais.herokuapp.com/api/tutoriais";
+  const url = "https://ludum-materiais.herokuapp.com/api/tutoriais"
 
-  componentDidMount(){
-    fetch(this.url)
+    fetch(url)
       .then(res => res.json())
       .then(json =>{
-        this.setState({
+        state({
           items: json,
         })
       });
-  }
   
-  StyledTableCell = withStyles(theme => ({
+  const StyledTableCell = withStyles(theme => ({
     head: {
       backgroundColor: '#28BBFF',
       color: theme.palette.common.black,
@@ -44,7 +38,7 @@ class Tutoriais extends Component{
     },
   }))(TableCell);
 
-  StyledTableRow = withStyles(theme => ({
+  const StyledTableRow = withStyles(theme => ({
     root: {
       '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.background.default,
@@ -52,7 +46,23 @@ class Tutoriais extends Component{
     },
   }))(TableRow);
 
-  useStyles = makeStyles(theme => ({
+  function createData(nome, status, autor, visualizar, aceitar, rejeitar) {
+    return { nome, status, autor, visualizar, aceitar, rejeitar };
+  }
+
+
+
+  const rows = [
+    createData('Flapy Bird','Pendente', 'Usuario'),
+    createData('jjestaqui','Aprovado', 'Administrador'),
+    createData('Snake','Aprovado', 'Administrador'),
+    createData('Tetris','Pendente', 'Usuario'),
+    createData('Juba','Pendente', 'Usuario'),
+  ];
+
+
+
+  const useStyles = makeStyles(theme => ({
     root: {
       width: '80%',
       marginTop: '10%',
@@ -67,20 +77,12 @@ class Tutoriais extends Component{
     },
   }));
 
-  style = {
-    textAlign : 'center',
-  };
-  render() {
-
-    var {items} = this.state;
-
-    const classes = this.useStyles();
+  function Tutoriais() {
+    const classes = useStyles();
     return (
-      <div> Peery </div>,
-
       <div> 
         <MuiThemeProvider>
-          <div style={this.style}>
+          <div style={style}>
             <AppBar
               style={{backgroundColor: '#63347f'}}
               title="Tutoriais"
@@ -94,38 +96,38 @@ class Tutoriais extends Component{
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
-                <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
-                <this.StyledTableCell align="right">AUTOR</this.StyledTableCell>
-                <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
-                <this.StyledTableCell align="right">APROVAR</this.StyledTableCell>
-                <this.StyledTableCell align="right">REJEITAR</this.StyledTableCell>
+                <StyledTableCell align="left">TITULO DO TUTORIAL</StyledTableCell>
+                <StyledTableCell align="right">STATUS</StyledTableCell>
+                <StyledTableCell align="right">AUTOR</StyledTableCell>
+                <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
+                <StyledTableCell align="right">APROVAR</StyledTableCell>
+                <StyledTableCell align="right">REJEITAR</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map(item => (
-                <this.StyledTableRow key={item._id}>
-                  <this.StyledTableCell component="th" scope="row">
+              {state.items.map(item => (
+                <StyledTableRow key={item._id}>
+                  <StyledTableCell component="th" scope="row">
                     {item.title}
-                  </this.StyledTableCell>
-                  <this.StyledTableCell align="right">{item.status}</this.StyledTableCell>
-                  <this.StyledTableCell align="right">{item._id}</this.StyledTableCell>
-                  <this.StyledTableCell align="right">{"visualizar"}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{item.status}</StyledTableCell>
+                  <StyledTableCell align="right">{item._id}</StyledTableCell>
+                  <StyledTableCell align="right">{"visualizar"}
                     <IconButton className={classes.button} aria-label="Visualizar">
                       <VisibilityIcon />
                     </IconButton>
-                  </this.StyledTableCell>
-                  <this.StyledTableCell align="right">{"aceitar"}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{"aceitar"}
                     <IconButton className={classes.button} aria-label="Aceitar">
                       <DoneIcon />
                     </IconButton>
-                  </this.StyledTableCell>
-                  <this.StyledTableCell align="right">{"rejeitar"}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">{"rejeitar"}
                     <IconButton className={classes.button} aria-label="Rejeitar">
                       <CloseIcon />
                     </IconButton>
-                  </this.StyledTableCell>
-                </this.StyledTableRow>
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>
@@ -134,7 +136,7 @@ class Tutoriais extends Component{
     )
   }
 
-
-  }
-
+  const style = {
+    textAlign : 'center',
+  };
   export default Tutoriais;
