@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import $ from 'jQuery';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -13,7 +12,24 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
-import { create } from 'domain';
+
+const Modal = ({ handleClose, show, children }) => {
+  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+
+  return (
+    <div className={showHideClassName}>
+      <section className='modal-main'>
+        <IconButton
+          onClick={handleClose}
+          >
+          <CloseIcon />
+      </IconButton>
+          {children}
+      </section>
+    </div>
+  );
+};
+
 
 class Tutoriais extends Component{
 
@@ -21,7 +37,10 @@ class Tutoriais extends Component{
     super();
       this.state = {
         data: [],
-        okay: false
+        okay: false,
+        show: false,
+        descricao: 'oi',
+        nome: '',
         }
     }
 
@@ -31,16 +50,48 @@ class Tutoriais extends Component{
     })
   }
   
+  descricaoModal = '';
+
+  setDescricao(descricao){
+    this.descricaoModal = descricao;
+    console.log(descricao);
+  } 
+
   items= [];
 
   url = ""
 
   rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}]; 
-  
-  createData(nome, status, autor, visualizar, aceitar, rejeitar) {
-    return { nome, status, autor, visualizar, aceitar, rejeitar };
+
+  showModal = () => {
+    this.setState({ show: true });
   }
   
+  hideModal = () => {
+    this.setState({ show: false });
+  }
+  
+  createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
+    return { nome, status, autor, descricao, visualizar, aceitar, rejeitar };
+  }
+  
+  showModal = () => {
+    this.setState({ show: true, nome: 'arroz' });
+  }
+
+  hideModal = () => {
+    this.setState({ show: false });
+  }
+
+  handleClick(event,descricao){
+    if(this.state.show){
+      this.hideModal();
+    }
+    else{
+      this.setState({descricao: descricao});
+      this.showModal();
+    }
+  }
   StyledTableCell = withStyles(theme => ({
     head: {
       backgroundColor: '#28BBFF',
@@ -76,6 +127,7 @@ class Tutoriais extends Component{
   }));
 
   
+
   buscaEP(url){
     console.log("Busca");
     var result = [];
@@ -84,15 +136,12 @@ class Tutoriais extends Component{
     })
           .then((res) => {
             res.json().then((json) => {
-              console.log(json);
               json.data.forEach(element => {
-                console.log(element.title)
-                this.rows.push(this.createData(element.title,element.status,element._id))
+                this.rows.push(this.createData(element.title,element.status,element._id,element.deion))
               });
               this.setState({
                 okay: true
               })
-              console.log("row");
               console.log(this.rows)
             })
           })
@@ -101,8 +150,6 @@ class Tutoriais extends Component{
   
     render(){
       const classes = this.useStyles;
-      console.log("RENDEEEEER");
-      console.log(this.rows);
       if(this.state.okay)return (
         <div> 
           <MuiThemeProvider>
@@ -137,12 +184,13 @@ class Tutoriais extends Component{
                     <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.autor}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.visualizar}
-                      <IconButton className={classes.button} aria-label="Visualizar">
+                      <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.descricao)} >
+
                         <VisibilityIcon />
                       </IconButton>
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.aceitar}
-                      <IconButton className={classes.button} aria-label="Aceitar">
+                      <IconButton className={classes.button} aria-label="Aceitar" onClick = {this.hideModal}>
                         <DoneIcon />
                       </IconButton>
                     </this.StyledTableCell>
@@ -155,15 +203,23 @@ class Tutoriais extends Component{
                 ))}
               </TableBody>
             </Table>
+            <Modal
+                show={this.state.show}
+                handleClose={this.hideModal}
+              >
+              <div className = "modal-body">
+              {this.state.descricao}
+              </div>
+              </Modal>
           </Paper>
         </div>
       )
       else{
         console.log("teste");
         return(
-          <div> HEHE </div>
+          <div> CARREGANDO INFORMAÇÕES </div>
         )
-
+      
       }
     }
 }
