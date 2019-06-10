@@ -60,7 +60,7 @@ class Tutoriais extends Component{
 
   items= [];
 
-  url = ""
+  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
 
   rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}]; 
 
@@ -84,6 +84,11 @@ class Tutoriais extends Component{
     this.setState({ show: false });
   }
 
+  handleAceitar(event,id){
+    fetch(this.url+ id +'/S',{
+      method: "PUT"
+    })
+  }
 
   handleClick(event,nome,descricao){
     if(this.state.show){
@@ -130,15 +135,25 @@ class Tutoriais extends Component{
 
   
 
-  buscaEP(url){
+  buscaEP(){
+    var status = ''
     console.log("Busca");
-    fetch('https://ludum-materiais.herokuapp.com/api/tutoriais/',{
+    fetch(this.url,{
       method: "GET"
     })
           .then((res) => {
             res.json().then((json) => {
                 json.data.forEach(element => {
-                  this.rows.push(this.createData(element.title,element.status,element._id,element.deion))
+                  if(element.status == 'S'){
+                    status = 'Aceito'
+                  }
+                  else if(element.status == 'N'){
+                    status = 'Recusado'
+                  }
+                  else{
+                    status = 'Pendente'
+                  }
+                  this.rows.push(this.createData(element.title,status,element._id,element.description))
                 });
                 this.setState({
                   okay: true
@@ -190,7 +205,7 @@ class Tutoriais extends Component{
                       </IconButton>
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.aceitar}
-                      <IconButton className={classes.button} aria-label="Aceitar" onClick = {this.hideModal}>
+                      <IconButton className={classes.button} aria-label="Aceitar" onClick = {this.handleAceitar(row._id)}>
                         <DoneIcon />
                       </IconButton>
                     </this.StyledTableCell>
