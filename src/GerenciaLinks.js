@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import { withStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +10,11 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
 import './Components/gerencia.css';
+import AuthService from './services/AuthService';
+import NavBar from './helpers/navbar';
+import withAuth from './services/withAuth';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -60,6 +62,7 @@ const Modal = ({ handleClose, show, children }) => {
     );
   };
 
+const Auth = new AuthService();
 
 class GerenciaLinks extends Component {
     constructor(props){
@@ -80,21 +83,18 @@ class GerenciaLinks extends Component {
         this.setState({ show: false });
       }
 
+      handleLogout(){
+        Auth.logout()
+        this.props.history.replace('/');
+     }
     render() {
         return (
             <div> 
-            <MuiThemeProvider>
-                <div style={style}>
-                <AppBar
-                    style={{backgroundColor: '#63347f'}}
-                    title="Links"
-                    />
-                <br/>
-                </div>
-            </MuiThemeProvider>
-            <br/>
-            <br/>
-            <Paper className = "style_root">
+            <NavBar></NavBar>
+            <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
+              Gerenciar Links
+            </Typography>
+            <Paper className = "style_root" style={{marginTop: "30px"}}>
                 <Table className = "style_table">
                 <TableHead>
                     <TableRow>
@@ -145,9 +145,4 @@ class GerenciaLinks extends Component {
         );
     }
     }
-
-const style = {
-textAlign : 'center',
-};
-
-export default GerenciaLinks;
+export default withAuth(GerenciaLinks);

@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,7 +11,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
-
+import NavBar from './helpers/navbar';
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
@@ -47,12 +45,9 @@ class Tutoriais extends Component{
     }
 
   componentDidMount(){
-    axios.get(`https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/`)
-      .then(res => {
-        const data = res.data;
-        console.log("data", data)
-        this.setState({ data });
-      })
+    this.setState({
+      data: this.buscaEP(),
+    })
   }
 
   items= [];
@@ -65,7 +60,6 @@ class Tutoriais extends Component{
 
   setDescricao(descricao){
     this.descricaoModal = descricao;
-    console.log(descricao);
   } 
 
   createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
@@ -80,16 +74,16 @@ class Tutoriais extends Component{
     this.setState({ show: false });
   }
 
-  handleAceitar(event,id){ //Aceita o tutorial
-    fetch(this.url+ id +'/S',{
-      method: "PUT"
-    })
+  handleAceitar(id){ //Aceita o tutorial
+    axios.put(this.url+ id +'/S')
+    this.props.history.replace('/tutorial/gerenciar');
   }
 
-  handleRejeitar(event,id){ //Recusa o tutorial
+  handleRejeitar(id){ //Recusa o tutorial
     fetch(this.url + id + '/N',{
       method: "PUT"
     })
+    this.props.history.replace('/tutorial/gerenciar');
   }
 
   handleClick(event,nome,descricao){ //Abre o modal se estiver fechado e fecha o modal se estiver aberto
@@ -104,24 +98,32 @@ class Tutoriais extends Component{
 
   buscaEP(){
     var status = ''
-    console.log("Busca");
-    console.log("this.state" ,this.state.data)
-                this.state.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
-                  if(element.status == 'S'){
-                    status = 'Aceito'
-                  }
-                  else if(element.status == 'N'){
-                    status = 'Recusado'
-                  }
-                  else{
-                    status = 'Pendente'
-                  }
-                  this.rows.push(this.createData(element.title,status,element._id,element.description))
-                });
-                this.setState({
-                  okay: true
-                })
-    };
+    if (!this.state.okay){
+      fetch(this.url,{  //Acessa a API do ludum
+        method: "GET"
+      })
+            .then((res) => {
+              res.json().then((json) => {
+                  json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
+                    if(element.status === 'S'){
+                      status = 'Aceito'
+                    }
+                    else if(element.status === 'N'){
+                      status = 'Recusado'
+                    }
+                    else{
+                      status = 'Pendente'
+                    }
+                    this.rows.push(this.createData(element.title,status,element._id,element.description))
+                  });
+                  this.setState({
+                    okay: true
+                  })
+              })
+            })
+          }
+
+    };  
   
   //Estilos da tabela
   StyledTableCell = withStyles(theme => ({
@@ -161,18 +163,10 @@ class Tutoriais extends Component{
   
     render(){ //Renderiza a tela caso tenha carregado as informações da api
       const classes = this.useStyles;
-      console.log("aaaa", this.state.data);
       if(this.state.okay)return (
         <div> 
-          <MuiThemeProvider>
-            <div style={style}>
-              <AppBar
-                style={{backgroundColor: '#63347f'}}
-                title="Tutoriais"
-               />
-              <br/>
-            </div>
-        </MuiThemeProvider>
+         <NavBar>
+         </NavBar>
         <br/>
         <br/>
           <Paper className={classes.root}>
@@ -202,12 +196,12 @@ class Tutoriais extends Component{
                       </IconButton>
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.aceitar}
-                      <IconButton className={classes.button} aria-label="Aceitar" onClick = {this.handleAceitar(row._id)}>
+                      <IconButton className={classes.button} aria-label="Aceitar" onClick = {() =>this.handleAceitar(row.autor)}>
                         <DoneIcon />
                       </IconButton>
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.rejeitar}
-                      <IconButton className={classes.button} aria-label="Rejeitar" onClick = {this.handleRejeitar(row._id)}>
+                      <IconButton className={classes.button} aria-label="Rejeitar" onClick = {() => this.handleRejeitar(row.autor)}>
                         <CloseIcon />
                       </IconButton>
                     </this.StyledTableCell>
@@ -230,7 +224,6 @@ class Tutoriais extends Component{
         </div>
       )
       else{
-        console.log("teste");
         return(
           <div> CARREGANDO INFORMAÇÕES </div>
         )
@@ -238,8 +231,5 @@ class Tutoriais extends Component{
       }
     }
 }
-  const style = {
-    textAlign : 'center',
-  };
 
   export default Tutoriais;
