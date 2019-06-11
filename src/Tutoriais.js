@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
+import axios from 'axios';
 
 
 const Modal = ({ handleClose, show, children }) => {
@@ -46,9 +47,12 @@ class Tutoriais extends Component{
     }
 
   componentDidMount(){
-    this.setState({
-      data: this.buscaEP(),
-    })
+    axios.get(`https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/`)
+      .then(res => {
+        const data = res.data;
+        console.log("data", data)
+        this.setState({ data });
+      })
   }
 
   items= [];
@@ -101,12 +105,8 @@ class Tutoriais extends Component{
   buscaEP(){
     var status = ''
     console.log("Busca");
-    fetch(this.url,{  //Acessa a API do ludum
-      method: "GET"
-    })
-          .then((res) => {
-            res.json().then((json) => {
-                json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
+    console.log("this.state" ,this.state.data)
+                this.state.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
                   if(element.status == 'S'){
                     status = 'Aceito'
                   }
@@ -121,9 +121,6 @@ class Tutoriais extends Component{
                 this.setState({
                   okay: true
                 })
-            })
-          })
-
     };
   
   //Estilos da tabela
@@ -164,6 +161,7 @@ class Tutoriais extends Component{
   
     render(){ //Renderiza a tela caso tenha carregado as informações da api
       const classes = this.useStyles;
+      console.log("aaaa", this.state.data);
       if(this.state.okay)return (
         <div> 
           <MuiThemeProvider>
