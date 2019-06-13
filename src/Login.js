@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SignInForm from './pages/SignInForm';
 import Ludum from './Images/lg.png';
+import { withRouter } from 'react-router-dom';
 
 import './Components/Login.css';
 
@@ -20,4 +21,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

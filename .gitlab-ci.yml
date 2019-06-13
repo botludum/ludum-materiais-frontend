@@ -1,16 +1,9 @@
 variables:
   LUDUM_MATERIAIS_FRONTEND_LATEST_IMAGE: $CI_REGISTRY_IMAGE/ludum-materiais-frontend
 
-unit_tests:
-  image: node:12.2.0
-  stage: test
-  before_script:
-    - npm install
-  script:
-    - npm test
 react_build:
   image: node:12.2.0
-  stage: build
+  stage: test
   before_script:
     - npm install
   script:
