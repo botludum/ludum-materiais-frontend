@@ -70,7 +70,7 @@ class GerenciaLinks extends Component {
     }
 
     url = 'https://produ-o.ludum-materiais.ludumbot.club/api/links/';
-    rows = [{title: null, type: null, status: null, id: null, link: null}];
+    rows = [];
     titleModal = '';
     typeModal = '';
     linkModal = '';
@@ -95,12 +95,20 @@ class GerenciaLinks extends Component {
 
     handleAceitar(id){
         axios.put(this.url + id + '/S');
-        this.props.history.replace('/link/gerenciar')
+        this.props.history.replace('/link/gerenciar');
+        // this.setState({
+        //     reqStatus: false,
+        //     linkData: this.buscaEP(),
+        // })
     }
 
     handleRejeitar(id){
         axios.put(this.url + id + '/N');
-        this.props.history.replace('/link/gerenciar')
+        this.props.history.replace('/link/gerenciar');
+        // this.setState({
+        //     reqStatus: false,
+        //     linkData: this.buscaEP(),
+        // })
     }
 
     handleClick(event, title, type, link){
@@ -131,7 +139,9 @@ class GerenciaLinks extends Component {
                         else{
                             status = 'Pendente'
                         }
+
                         this.rows.push(this.createData(element.title, element.type, status, element._id, element.link))
+                        
                     });
                     this.setState({
                         reqStatus: true
@@ -143,6 +153,7 @@ class GerenciaLinks extends Component {
 
     render() {
         if(this.state.reqStatus){
+            console.log(this.rows);
             return (
                 <div> 
                 {/* <NavBar></NavBar> */}
