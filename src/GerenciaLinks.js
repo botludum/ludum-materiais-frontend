@@ -11,8 +11,11 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
-// import NavBar from './helpers/navbar';
+import Typography from '@material-ui/core/Typography';
 import './Components/gerencia.css';
+import AuthService from './services/AuthService';
+import NavBar from './helpers/navbar';
+import withAuth from './services/withAuth';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -48,6 +51,8 @@ const Modal = ({ handleClose, show, children }) => {
       </div>
     );
   };
+
+const Auth = new AuthService();
 
 class GerenciaLinks extends Component {
     constructor(props){
@@ -96,19 +101,11 @@ class GerenciaLinks extends Component {
     handleAceitar(id){
         axios.put(this.url + id + '/S');
         this.props.history.replace('/link/gerenciar');
-        // this.setState({
-        //     reqStatus: false,
-        //     linkData: this.buscaEP(),
-        // })
     }
 
     handleRejeitar(id){
         axios.put(this.url + id + '/N');
         this.props.history.replace('/link/gerenciar');
-        // this.setState({
-        //     reqStatus: false,
-        //     linkData: this.buscaEP(),
-        // })
     }
 
     handleClick(event, title, type, link){
@@ -151,61 +148,66 @@ class GerenciaLinks extends Component {
         }
     }
 
+      handleLogout(){
+        Auth.logout()
+        this.props.history.replace('/');
+     }
     render() {
+
         if(this.state.reqStatus){
-            console.log(this.rows);
             return (
                 <div> 
-                {/* <NavBar></NavBar> */}
-                <br/>
-                <br/>
-                <Paper className = "style_root">
-                    <Table className = "style_table">
-                    <TableHead>
-                        <TableRow>
-                        <StyledTableCell align="left">TITULO DO LINK</StyledTableCell>
-                        <StyledTableCell align="right">TIPO</StyledTableCell>
-                        <StyledTableCell align="right">STATUS</StyledTableCell>
-                        <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
-                        <StyledTableCell align="right">APROVAR</StyledTableCell>
-                        <StyledTableCell align="right">REJEITAR</StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.rows.map(row => (
-                        <StyledTableRow key={row.id}>
-                            <StyledTableCell component="th" scope="row">
-                            {row.title}
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.type}</StyledTableCell>
-                            <StyledTableCell align="right">{row.status}</StyledTableCell>
-                            <StyledTableCell align="right">   
-                            <IconButton className="style_button" aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.title,row.type, row.link)}>
-                                <VisibilityIcon />
-                            </IconButton>
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.accept}
-                            <IconButton className="style_button" aria-label="Aceitar" onClick = {() =>this.handleAceitar(row.id)}>
-                                <DoneIcon />
-                            </IconButton>
-                            </StyledTableCell>
-                            <StyledTableCell align="right">{row.reject}
-                            <IconButton className="style_button" aria-label="Rejeitar" onClick = {() =>this.handleRejeitar(row.id)}>
-                                <CloseIcon />
-                            </IconButton>
-                            </StyledTableCell>
-                        </StyledTableRow>
-                        ))}
-                    </TableBody>
-                    </Table>
-                    <Modal show={this.state.show} handleClose={this.hideModal} >
-                        <div className = "modal-body">
-                            <p><b>Titulo: </b>{this.state.title}</p>
-                            <p><b>Tipo: </b>{this.state.type}</p>
-                            <p><b>Link: </b>{this.state.link}</p>
-                        </div>
-                    </Modal>
-                </Paper>
+                    <NavBar></NavBar>
+                    <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
+                        Gerenciar Links
+                    </Typography>
+                    <Paper className = "style_root" style={{marginTop: "30px"}}>
+                        <Table className = "style_table">
+                        <TableHead>
+                            <TableRow>
+                            <StyledTableCell align="left">TITULO DO LINK</StyledTableCell>
+                            <StyledTableCell align="right">TIPO</StyledTableCell>
+                            <StyledTableCell align="right">STATUS</StyledTableCell>
+                            <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
+                            <StyledTableCell align="right">APROVAR</StyledTableCell>
+                            <StyledTableCell align="right">REJEITAR</StyledTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {this.rows.map(row => (
+                            <StyledTableRow key={row.id}>
+                                <StyledTableCell component="th" scope="row">
+                                {row.title}
+                                </StyledTableCell>
+                                <StyledTableCell align="right">{row.type}</StyledTableCell>
+                                <StyledTableCell align="right">{row.status}</StyledTableCell>
+                                <StyledTableCell align="right">   
+                                <IconButton className="style_button" aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.title,row.type, row.link)}>
+                                    <VisibilityIcon />
+                                </IconButton>
+                                </StyledTableCell>
+                                <StyledTableCell align="right">{row.accept}
+                                <IconButton className="style_button" aria-label="Aceitar" onClick = {() =>this.handleAceitar(row.id)}>
+                                    <DoneIcon />
+                                </IconButton>
+                                </StyledTableCell>
+                                <StyledTableCell align="right">{row.reject}
+                                <IconButton className="style_button" aria-label="Rejeitar" onClick = {() =>this.handleRejeitar(row.id)}>
+                                    <CloseIcon />
+                                </IconButton>
+                                </StyledTableCell>
+                            </StyledTableRow>
+                            ))}
+                        </TableBody>
+                        </Table>
+                        <Modal show={this.state.show} handleClose={this.hideModal} >
+                            <div className = "modal-body">
+                                <p><b>Titulo: </b>{this.state.title}</p>
+                                <p><b>Tipo: </b>{this.state.type}</p>
+                                <p><b>Link: </b>{this.state.link}</p>
+                            </div>
+                        </Modal>
+                    </Paper>
                 </div>
             );
         }  
@@ -220,4 +222,4 @@ class GerenciaLinks extends Component {
 }
 
 
-export default GerenciaLinks;
+export default withAuth(GerenciaLinks);

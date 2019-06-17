@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -10,6 +8,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './Components/link.css';
+import NavBar from './helpers/navbar';
+import { withRouter } from 'react-router-dom';
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -146,17 +146,11 @@ class CadastrarLink extends Component {
 
   render() {
     return (
-      <div>
-        <MuiThemeProvider>
-          <div style={style}>
-            <AppBar
-              position="static"
-              style={style_bar}
-            >
-            <Typography variant="h5" color="inherit">
+      <div style={{textAlign: "center"}}>
+          <NavBar></NavBar>
+          <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
               Cadastrar Links
             </Typography>
-            </AppBar>
             <TextField
               error={this.state.nomeLinkError !== ''}
               name="nomeLink"
@@ -172,7 +166,7 @@ class CadastrarLink extends Component {
               error={this.state.tipoLinkError !== ''}
               name="tipoLink"
               id="standard-name"
-              label="Tipo (Livro, site, artigo...)"
+              label="Tipo (site, artigo...)"
               value={this.state.tipoLink || ''}
               onChange={this.handleChange}
               margin="normal"
@@ -206,8 +200,6 @@ class CadastrarLink extends Component {
                 </SendButton>
               )
             }
-          </div>
-        </MuiThemeProvider>
         <Modal
           show={this.state.show}
           handleClose={this.hideModal}
@@ -226,16 +218,6 @@ const error_style = {
   color: 'red',
 };
 
-const style_bar = {
-  backgroundColor: '#63347f',
-  height: window.innerWidth * 0.03,
-};
-
-const style = {
-  textAlign : 'center',
-
-};
-
 const style_descricao = {
   width : window.innerWidth * 0.5,
   marginTop: 20,
@@ -243,4 +225,4 @@ const style_descricao = {
 }
 
 
-export default CadastrarLink;
+export default withRouter(CadastrarLink);
