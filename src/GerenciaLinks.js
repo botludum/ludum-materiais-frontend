@@ -16,6 +16,7 @@ import './Components/gerencia.css';
 import AuthService from './services/AuthService';
 import NavBar from './helpers/navbar';
 import withAuth from './services/withAuth';
+import Loading from './helpers/loading';
 
 const StyledTableCell = withStyles(theme => ({
     head: {
@@ -215,9 +216,7 @@ class GerenciaLinks extends Component {
         }  
         else{
             return (
-                <div>
-                    Carregando Informações
-                </div>
+                <Loading/>
             )
         }      
     }

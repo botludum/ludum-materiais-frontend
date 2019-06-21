@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import NavBar from './helpers/navbar';
+import Loading from './helpers/loading';
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
@@ -150,7 +151,7 @@ class VerTutoriais extends Component{
          <NavBar>
          </NavBar>
          <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
-                        Gerenciar Tutoriais
+            Tutoriais
          </Typography>
           <Paper className="style_root" style={{marginTop: "30px"}}>
             <Table className={classes.table}>
@@ -158,7 +159,6 @@ class VerTutoriais extends Component{
                 <TableRow>
                   <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
                   <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
-                  <this.StyledTableCell align="right">AUTOR</this.StyledTableCell>
                   <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -169,7 +169,6 @@ class VerTutoriais extends Component{
                       {row.nome}
                     </this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.autor}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.visualizar}
                       <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.nome,row.descricao)} >
                         <VisibilityIcon />
@@ -193,7 +192,7 @@ class VerTutoriais extends Component{
       )
       else{
         return(
-          <div> CARREGANDO INFORMAÇÕES </div>
+          <Loading />
         )
       
       }

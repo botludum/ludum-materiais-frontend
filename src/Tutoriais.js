@@ -13,6 +13,7 @@ import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import NavBar from './helpers/navbar';
+import Loading from './helpers/loading';
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
@@ -193,7 +194,6 @@ class Tutoriais extends Component{
                     <this.StyledTableCell align="right">{row.autor}</this.StyledTableCell>
                     <this.StyledTableCell align="right">{row.visualizar}
                       <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.nome,row.descricao)} >
-
                         <VisibilityIcon />
                       </IconButton>
                     </this.StyledTableCell>
@@ -225,7 +225,7 @@ class Tutoriais extends Component{
       )
       else{
         return(
-          <div> CARREGANDO INFORMAÇÕES </div>
+          <Loading />
         )
       
       }
