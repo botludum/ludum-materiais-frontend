@@ -215,7 +215,7 @@ class Tutoriais extends Component{
               >
               <div className = "modal-body">
               <p><b>Titulo: </b>{this.state.nome}</p>
-              <p><b>Descrição: </b></p><p style={{margin: "20px"}}>{this.state.descricao}</p>
+              <p><b>Descrição: </b></p><p style={{margin: "20px"}} dangerouslySetInnerHTML={{ __html: this.state.descricao }}></p>
               </div>
               </Modal>
           </Paper>

@@ -10,6 +10,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import './Components/Modal.css'
 import NavBar from './helpers/navbar';
 import { withRouter } from 'react-router-dom';
+import ReactQuill from 'react-quill'; // ES6
+import 'react-quill/dist/quill.snow.css'; // ES6
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -49,6 +51,7 @@ class CadastrarTutorial extends Component {
       responseMessage: '',
       show: false,
       loading: false,
+      text: ''
     };
   }
 
@@ -109,6 +112,10 @@ class CadastrarTutorial extends Component {
     }
   }
 
+  handleChangeText = (value) => {
+    this.setState({ descricaoTutorial: value })
+  }
+
   showModal = () => {
     this.setState({ show: true });
   }
@@ -144,7 +151,7 @@ class CadastrarTutorial extends Component {
         />
         <br />
         <div style={error_style}>{this.state.nomeError}</div>
-        <TextField
+        {/* <TextField
           error={this.state.descricaoError !== ''}
           name="descricaoTutorial"
           label="Escreva o seu tutorial"
@@ -156,8 +163,11 @@ class CadastrarTutorial extends Component {
           variant="outlined"
           style={style_descricao}
         />
-        <div style={error_style}>{this.state.descricaoError}</div>
+        <div style={error_style}>{this.state.descricaoError}</div> */}
+         <ReactQuill value={this.state.descricaoTutorial}
+                  onChange={this.handleChangeText} style={{height: "300px", width: "80vw", marginLeft: "140px"}}/>
         <br />
+        <br/><br/>
         {this.state.loading ?
           (
             <CircularProgress />
