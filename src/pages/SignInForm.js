@@ -40,6 +40,10 @@ class SignInForm extends Component {
     this.props.history.replace('/link/cadastrar');
   }
 
+  handleTutoriais(){
+    this.props.history.replace('/tutoriais');
+  }
+
   render() {
     return (
       <div className="FormCenter">
@@ -66,6 +70,8 @@ class SignInForm extends Component {
           <br/><br/>
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutorial</button>
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</button>
+          <br/><br/>
+          <button className="FormField__Button mr-20" onClick={this.handleTutoriais.bind(this)}>Ver Tutoriais</button>
         </div>
       </div>
     );

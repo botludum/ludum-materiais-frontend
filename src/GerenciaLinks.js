@@ -65,6 +65,7 @@ class GerenciaLinks extends Component {
             type: '',
             link: '',
             reqStatus: false,
+            status: '',
         }
     }
 
@@ -98,14 +99,16 @@ class GerenciaLinks extends Component {
         this.setState({ show: false });
     }
 
-    handleAceitar(id){
+    handleAceitar = (id) => {
         axios.put(this.url + id + '/S');
-        this.props.history.replace('/link/gerenciar');
+        this.setState({ status: 'Aceito' });
+        this.forceUpdate();
     }
 
-    handleRejeitar(id){
-        axios.put(this.url + id + '/N');
-        this.props.history.replace('/link/gerenciar');
+    handleRejeitar = (id) => {
+        axios.put(this.url + id + '/N')
+        this.setState({ status: 'Recusado' });
+        this.forceUpdate();
     }
 
     handleClick(event, title, type, link){
@@ -119,7 +122,7 @@ class GerenciaLinks extends Component {
     }
 
     buscaEP(url){
-        var status = ''
+        // var status = ''
         if (!this.state.reqStatus){
             fetch(this.url,{  //Acessa a API do ludum
                 method: "GET"
@@ -128,16 +131,16 @@ class GerenciaLinks extends Component {
                 res.json().then((json) => {
                     json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
                         if(element.status === 'S'){
-                            status = 'Aceito'
+                            this.setState({ status: 'Aceito' })
                         }
                         else if(element.status === 'N'){
-                            status = 'Recusado'
+                            this.setState({ status: 'Recusado' })
                         }
                         else{
-                            status = 'Pendente'
+                            this.setState({ status: 'Pendente' })
                         }
 
-                        this.rows.push(this.createData(element.title, element.type, status, element._id, element.link))
+                        this.rows.push(this.createData(element.title, element.type, this.state.status, element._id, element.link))
                         
                     });
                     this.setState({
@@ -153,7 +156,6 @@ class GerenciaLinks extends Component {
         this.props.history.replace('/');
      }
     render() {
-
         if(this.state.reqStatus){
             return (
                 <div> 

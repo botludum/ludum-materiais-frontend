@@ -9,6 +9,10 @@ const Auth = new AuthService();
 
 class NavBar extends Component {
 
+    handleTutoriais(){
+        this.props.history.replace('/tutoriais');
+    }
+
     handleLogout() {
         Auth.logout()
         this.props.history.replace('/');
@@ -33,6 +37,7 @@ class NavBar extends Component {
     renderNaoAutenticado() {
         return (
             <AppBar style={{ backgroundColor: '#63347f' }} showMenuIconButton={false} >
+                <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleTutoriais.bind(this)}>Tutoriais</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutoriais</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleLogout.bind(this)}>Entrar</Button>
@@ -44,6 +49,7 @@ class NavBar extends Component {
     renderAutenticado() {
         return (
             <AppBar style={{ backgroundColor: '#63347f' }} showMenuIconButton={false} >
+                <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleTutoriais.bind(this)}>Tutoriais</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleGerenciarLink.bind(this)}>Gerenciar Links</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutoriais</Button>
