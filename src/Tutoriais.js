@@ -39,7 +39,7 @@ class Tutoriais extends Component{
         data: [],
         okay: false,
         show: false,
-        descricao: 'oi',
+        descricao: '',
         nome: '',
         }
     }
@@ -54,7 +54,7 @@ class Tutoriais extends Component{
 
   url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
 
-  rows = [{nome: null,status: null,autor: null,visualizar: null, aceitar: null, rejeitar: null}];  //Atributo que preenche a tabela dos tutoriais
+  rows = [];  //Atributo que preenche a tabela dos tutoriais
   
   descricaoModal = '';
 
@@ -213,11 +213,9 @@ class Tutoriais extends Component{
                 show={this.state.show}
                 handleClose={this.hideModal}
               >
-              <div className = "modal-head">
-                  {this.state.nome}
-              </div>
               <div className = "modal-body">
-              {this.state.descricao}
+              <p><b>Titulo: </b>{this.state.nome}</p>
+              <p><b>Descrição: </b></p><p style={{margin: "20px"}}>{this.state.descricao}</p>
               </div>
               </Modal>
           </Paper>
