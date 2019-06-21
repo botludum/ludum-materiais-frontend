@@ -135,6 +135,23 @@ class CadastrarTutorial extends Component {
   };
 
   render() {
+    const toolbarOptions = [
+      ['bold', 'italic', 'underline'],    
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image', 'code-block'],
+      ['clean']                                        
+  ];
+
+  const history = {
+      delay: 2000,
+      maxStack: 500,
+      userOnly: true
+  }
+  const formats = [
+      'bold', 'italic', 'underline',
+      'list', 'bullet', 'indent',
+      'link', 'image', 'code-block'
+  ]
     return (
       <div style={{textAlign: "center"}}>
         <NavBar></NavBar>
@@ -151,21 +168,12 @@ class CadastrarTutorial extends Component {
         />
         <br />
         <div style={error_style}>{this.state.nomeError}</div>
-        {/* <TextField
-          error={this.state.descricaoError !== ''}
-          name="descricaoTutorial"
-          label="Escreva o seu tutorial"
-          value={this.state.descricaoTutorial || ''}
-          onChange={this.handleChange}
-          multiline={true}
-          rowsMax="20"
-          rows="15"
-          variant="outlined"
-          style={style_descricao}
-        />
-        <div style={error_style}>{this.state.descricaoError}</div> */}
          <ReactQuill value={this.state.descricaoTutorial}
-                  onChange={this.handleChangeText} style={{height: "300px", width: "80vw", marginLeft: "140px"}}/>
+                  onChange={this.handleChangeText} 
+                  modules={{syntax: true, toolbar: toolbarOptions, history: history}}
+                  theme= 'snow'
+                  formats={formats}
+                  style={{height: "300px", width: "80vw", marginLeft: "140px"}}/>
         <br />
         <br/><br/>
         {this.state.loading ?
@@ -193,12 +201,6 @@ class CadastrarTutorial extends Component {
     );
   }
 }
-
-const style_descricao = {
-  width: window.innerWidth * 0.5,
-  marginTop: 20,
-  marginBottom: 20,
-};
 
 const error_style = {
   fontSize: 15,

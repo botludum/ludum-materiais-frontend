@@ -5,6 +5,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -167,9 +168,10 @@ class Tutoriais extends Component{
         <div> 
          <NavBar>
          </NavBar>
-        <br/>
-        <br/>
-          <Paper className={classes.root}>
+         <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
+                        Gerenciar Tutoriais
+         </Typography>
+          <Paper className="style_root" style={{marginTop: "30px"}}>
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
@@ -215,7 +217,7 @@ class Tutoriais extends Component{
               >
               <div className = "modal-body">
               <p><b>Titulo: </b>{this.state.nome}</p>
-              <p><b>Descrição: </b></p><p style={{margin: "20px"}} dangerouslySetInnerHTML={{ __html: this.state.descricao }}></p>
+              <p><b>Descrição: </b></p><div style={{marginLeft: '20px', textAlign:'left'}} dangerouslySetInnerHTML={{ __html: this.state.descricao }}></div>
               </div>
               </Modal>
           </Paper>

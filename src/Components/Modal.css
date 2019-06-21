@@ -1,7 +1,6 @@
 .modal-body {
     font: arial;
     font-size: large;
-    text-align: center;
 }
 
  .style_root {
@@ -39,12 +38,8 @@
     overflow: scroll;
     word-break: break-word;
     display: block;
- }
-.modal-body {
-    font: arial;
-    font-size: large;
-    text-align: center;
 }
+
 .display-block {
     display: block;
 }
