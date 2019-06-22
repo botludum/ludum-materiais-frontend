@@ -8,14 +8,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
-import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import './Components/gerencia.css';
 import AuthService from './services/AuthService';
 import NavBar from './helpers/navbar';
-import withAuth from './services/withAuth';
 import Loading from './helpers/loading';
 
 const StyledTableCell = withStyles(theme => ({
@@ -55,7 +52,7 @@ const Modal = ({ handleClose, show, children }) => {
 
 const Auth = new AuthService();
 
-class GerenciaLinks extends Component {
+class VerLinks extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -76,7 +73,7 @@ class GerenciaLinks extends Component {
         })
     }
 
-    url = 'https://produ-o.ludum-materiais.ludumbot.club/api/links/';
+    url = 'https://produ-o.ludum-materiais.ludumbot.club/api/links/aprovados/S';
     rows = [];
     titleModal = '';
     typeModal = '';
@@ -98,18 +95,6 @@ class GerenciaLinks extends Component {
 
     hideModal = () => {
         this.setState({ show: false });
-    }
-
-    handleAceitar = (id) => {
-        axios.put(this.url + id + '/S');
-        this.setState({ status: 'Aceito' });
-        this.forceUpdate();
-    }
-
-    handleRejeitar = (id) => {
-        axios.put(this.url + id + '/N')
-        this.setState({ status: 'Recusado' });
-        this.forceUpdate();
     }
 
     handleClick(event, title, type, link) {
@@ -162,7 +147,7 @@ class GerenciaLinks extends Component {
                 <div>
                     <NavBar></NavBar>
                     <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
-                        Gerenciar Links
+                        Links
                     </Typography>
                     <Paper className="style_root" style={{ marginTop: "30px" }}>
                         <Table className="style_table">
@@ -172,8 +157,6 @@ class GerenciaLinks extends Component {
                                     <StyledTableCell align="right">TIPO</StyledTableCell>
                                     <StyledTableCell align="right">STATUS</StyledTableCell>
                                     <StyledTableCell align="right">VISUALIZAR</StyledTableCell>
-                                    <StyledTableCell align="right">APROVAR</StyledTableCell>
-                                    <StyledTableCell align="right">REJEITAR</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -187,16 +170,6 @@ class GerenciaLinks extends Component {
                                         <StyledTableCell align="right">
                                             <IconButton className="style_button" aria-label="Visualizar" onClick={(event) => this.handleClick(event, row.title, row.type, row.link)}>
                                                 <VisibilityIcon />
-                                            </IconButton>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="right">{row.accept}
-                                            <IconButton className="style_button" aria-label="Aceitar" onClick={() => this.handleAceitar(row.id)}>
-                                                <DoneIcon />
-                                            </IconButton>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="right">{row.reject}
-                                            <IconButton className="style_button" aria-label="Rejeitar" onClick={() => this.handleRejeitar(row.id)}>
-                                                <CloseIcon />
                                             </IconButton>
                                         </StyledTableCell>
                                     </StyledTableRow>
@@ -223,4 +196,4 @@ class GerenciaLinks extends Component {
 }
 
 
-export default withAuth(GerenciaLinks);
+export default VerLinks;

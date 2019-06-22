@@ -9,12 +9,14 @@ import CadastrarTutorial from './CadastrarTutorial';
 import CadastrarLink from './CadastrarLink';
 import GerenciaLinks from './GerenciaLinks';
 import VerTutoriais from './VerTutoriais';
+import VerLinks from './VerLinks';
 
 const routing = (
   <Router>
     <div>
       <Route exact path="/" component={Login} />
       <Route path="/tutoriais" component={VerTutoriais} />
+      <Route path="/links" component={VerLinks} />
       <Route path="/link/gerenciar" component={GerenciaLinks} />
       <Route path="/link/cadastrar" component={CadastrarLink} />
       <Route path="/tutorial/cadastrar" component={CadastrarTutorial} />

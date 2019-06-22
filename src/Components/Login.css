@@ -79,9 +79,10 @@
   outline: none;
   border-radius: 25px;
   padding: 15px 70px;
-  font-size: .8em;
+  font-size: .9em;
   font-weight: 500;
   cursor:pointer;
+  width: 30%;
 }
 
 .FormField__Link {

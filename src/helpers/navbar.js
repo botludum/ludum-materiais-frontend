@@ -9,6 +9,10 @@ const Auth = new AuthService();
 
 class NavBar extends Component {
 
+    handleLinks() {
+        this.props.history.replace('/links');
+    }
+
     handleTutoriais() {
         this.props.history.replace('/tutoriais');
     }
@@ -37,6 +41,7 @@ class NavBar extends Component {
     renderNaoAutenticado() {
         return (
             <AppBar style={{ backgroundColor: '#63347f' }} showMenuIconButton={false} >
+                <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleLinks.bind(this)}>Links</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleTutoriais.bind(this)}>Tutoriais</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutoriais</Button>
