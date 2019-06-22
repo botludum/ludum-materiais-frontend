@@ -14,13 +14,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import NavBar from './helpers/navbar';
 import Loading from './helpers/loading';
+import './Components/Modal.css'
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main'>
+      <section className='modal-main' style={{height: '80vh'}}>
         <IconButton
           onClick={handleClose}
         >

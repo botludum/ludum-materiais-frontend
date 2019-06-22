@@ -41,7 +41,7 @@ const Modal = ({ handleClose, show, children }) => {
 
     return (
         <div className={showHideClassName}>
-            <section className='modal-main'>
+            <section className='modal-main' style={{height: '40vh'}}>
                 <IconButton
                     onClick={handleClose}
                 >

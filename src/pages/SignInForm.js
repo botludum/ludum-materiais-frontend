@@ -17,15 +17,14 @@ class SignInForm extends Component {
 
   componentWillMount() {
     if (this.Auth.loggedIn())
-      this.props.history.push('/link/gerenciar');
+      this.props.history.push('/tutoriais');
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.username);
     this.Auth.login(this.state.username, this.state.password)
       .then(res => {
-        this.props.history.push('/link/gerenciar');
+        this.props.history.push('/tutoriais');
       })
       .catch(err => {
         alert(err);

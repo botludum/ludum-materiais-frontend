@@ -12,13 +12,14 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import CloseIcon from '@material-ui/icons/Close';
 import NavBar from './helpers/navbar';
 import Loading from './helpers/loading';
+import './Components/Modal.css'
 
 const Modal = ({ handleClose, show, children }) => {
   const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main'>
+      <section className='modal-main' style={{height: '80vh'}}>
         <IconButton
           onClick={handleClose}
         >
@@ -52,7 +53,7 @@ class VerTutoriais extends Component {
 
   items = [];
 
-  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
+  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/aprovados/S"
 
   rows = [];
 
