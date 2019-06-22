@@ -146,6 +146,7 @@ class CadastrarLink extends Component {
 
   render() {
     return (
+      <div>
       <div style={{ textAlign: "center" }}>
         <NavBar></NavBar>
         <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
@@ -200,6 +201,8 @@ class CadastrarLink extends Component {
                 </SendButton>
           )
         }
+        </div>
+        <div>
         <Modal
           show={this.state.show}
           handleClose={this.hideModal}
@@ -208,6 +211,7 @@ class CadastrarLink extends Component {
             {this.state.responseMessage}
           </div>
         </Modal>
+        </div>
       </div>
     );
   }

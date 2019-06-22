@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import './Components/Modal.css'
+import './Components/gerencia.css';
 import NavBar from './helpers/navbar';
 import { withRouter } from 'react-router-dom';
 import ReactQuill from 'react-quill'; // ES6
@@ -106,7 +106,7 @@ class CadastrarTutorial extends Component {
         })
         .catch((error) => {
           console.log(error);
-          this.setState({ responseMessage: 'Algo deu errado, tente novamente mais tarde' });
+          this.setState({ responseMessage: 'Algo deu errado, tente novamente mais tarde', loading: false });
           this.showModal();
         });
     }
@@ -153,6 +153,7 @@ class CadastrarTutorial extends Component {
       'link', 'image', 'code-block'
     ]
     return (
+      <div>
       <div style={{ textAlign: "center" }}>
         <NavBar></NavBar>
         <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
@@ -189,14 +190,17 @@ class CadastrarTutorial extends Component {
                 </SendButton>
           )
         }
+        </div>
+        <div>
         <Modal
           show={this.state.show}
           handleClose={this.hideModal}
         >
           <div className="modal-body">
-            {this.state.responseMessage}
+            <p>{this.state.responseMessage}</p>
           </div>
         </Modal>
+      </div>
       </div>
     );
   }
