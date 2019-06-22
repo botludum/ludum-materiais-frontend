@@ -54,6 +54,7 @@ class NavBar extends Component {
     renderAutenticado() {
         return (
             <AppBar style={{ backgroundColor: '#63347f' }} showMenuIconButton={false} >
+                <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleLinks.bind(this)}>Links</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleTutoriais.bind(this)}>Tutoriais</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</Button>
                 <Button color="inherit" style={{ color: "#fff" }} onClick={this.handleGerenciarLink.bind(this)}>Gerenciar Links</Button>
