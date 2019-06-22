@@ -32,15 +32,15 @@ class SignInForm extends Component {
       })
   }
 
-  handleCadastrarTutorial(){
+  handleCadastrarTutorial() {
     this.props.history.replace('/tutorial/cadastrar');
   }
 
-  handleCadastrarLink(){
+  handleCadastrarLink() {
     this.props.history.replace('/link/cadastrar');
   }
 
-  handleTutoriais(){
+  handleTutoriais() {
     this.props.history.replace('/tutoriais');
   }
 
@@ -63,14 +63,14 @@ class SignInForm extends Component {
           </div>
         </form>
         <div style={{ textAlign: "center" }}>
-          <br/><br/><br/>
+          <br /><br /><br />
           <Typography variant="h6" color="inherit" style={{ textAlign: "center" }}>
             Deseja cadastrar um material? Selecione uma opção abaixo:
           </Typography>
-          <br/><br/>
+          <br /><br />
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutorial</button>
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</button>
-          <br/><br/>
+          <br /><br />
           <button className="FormField__Button mr-20" onClick={this.handleTutoriais.bind(this)}>Ver Tutoriais</button>
         </div>
       </div>

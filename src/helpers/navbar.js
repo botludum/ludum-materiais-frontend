@@ -9,7 +9,7 @@ const Auth = new AuthService();
 
 class NavBar extends Component {
 
-    handleTutoriais(){
+    handleTutoriais() {
         this.props.history.replace('/tutoriais');
     }
 

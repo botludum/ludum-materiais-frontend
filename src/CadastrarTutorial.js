@@ -136,24 +136,24 @@ class CadastrarTutorial extends Component {
 
   render() {
     const toolbarOptions = [
-      ['bold', 'italic', 'underline'],    
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
       ['link', 'image', 'code-block'],
-      ['clean']                                        
-  ];
+      ['clean']
+    ];
 
-  const history = {
+    const history = {
       delay: 2000,
       maxStack: 500,
       userOnly: true
-  }
-  const formats = [
+    }
+    const formats = [
       'bold', 'italic', 'underline',
       'list', 'bullet', 'indent',
       'link', 'image', 'code-block'
-  ]
+    ]
     return (
-      <div style={{textAlign: "center"}}>
+      <div style={{ textAlign: "center" }}>
         <NavBar></NavBar>
         <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
           Cadastrar Tutorial
@@ -168,14 +168,14 @@ class CadastrarTutorial extends Component {
         />
         <br />
         <div style={error_style}>{this.state.nomeError}</div>
-         <ReactQuill value={this.state.descricaoTutorial}
-                  onChange={this.handleChangeText} 
-                  modules={{syntax: true, toolbar: toolbarOptions, history: history}}
-                  theme= 'snow'
-                  formats={formats}
-                  style={{height: "300px", width: "80vw", marginLeft: "140px"}}/>
+        <ReactQuill value={this.state.descricaoTutorial}
+          onChange={this.handleChangeText}
+          modules={{ syntax: true, toolbar: toolbarOptions, history: history }}
+          theme='snow'
+          formats={formats}
+          style={{ height: "300px", width: "80vw", marginLeft: "140px" }} />
         <br />
-        <br/><br/>
+        <br /><br />
         {this.state.loading ?
           (
             <CircularProgress />

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,93 +21,93 @@ const Modal = ({ handleClose, show, children }) => {
       <section className='modal-main'>
         <IconButton
           onClick={handleClose}
-          >
+        >
           <CloseIcon />
-      </IconButton>
-          {children}
+        </IconButton>
+        {children}
       </section>
     </div>
   );
 };
 
 
-class VerTutoriais extends Component{
+class VerTutoriais extends Component {
 
-  constructor(){
+  constructor() {
     super();
-      this.state = {
-        data: [],
-        okay: false,
-        show: false,
-        descricao: '',
-        nome: '',
-        }
+    this.state = {
+      data: [],
+      okay: false,
+      show: false,
+      descricao: '',
+      nome: '',
     }
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
       data: this.buscaEP(),
     })
   }
 
-  items= [];
+  items = [];
 
   url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
 
-  rows = []; 
-  
+  rows = [];
+
 
   createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
     return { nome, status, autor, descricao, visualizar, aceitar, rejeitar };
   }
-  
+
   showModal = () => { //Abre o modal
-    this.setState({ show: true,});
+    this.setState({ show: true, });
   }
 
   hideModal = () => { //Fecha o modal
     this.setState({ show: false });
   }
 
-  handleClick(event,nome,descricao){ //Abre o modal se estiver fechado e fecha o modal se estiver aberto
-    if(this.state.show){
+  handleClick(event, nome, descricao) { //Abre o modal se estiver fechado e fecha o modal se estiver aberto
+    if (this.state.show) {
       this.hideModal();
     }
-    else{
-      this.setState({nome: nome,descricao: descricao});
+    else {
+      this.setState({ nome: nome, descricao: descricao });
       this.showModal();
     }
   }
 
-  buscaEP(){
+  buscaEP() {
     var status = ''
-    if (!this.state.okay){
-      fetch(this.url,{  //Acessa a API do ludum
+    if (!this.state.okay) {
+      fetch(this.url, {  //Acessa a API do ludum
         method: "GET"
       })
-            .then((res) => {
-              res.json().then((json) => {
-                  json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
-                    if(element.status === 'S'){
-                      status = 'Aceito'
-                    }
-                    else if(element.status === 'N'){
-                      status = 'Recusado'
-                    }
-                    else{
-                      status = 'Pendente'
-                    }
-                    this.rows.push(this.createData(element.title,status,element._id,element.description))
-                  });
-                  this.setState({
-                    okay: true
-                  })
-              })
+        .then((res) => {
+          res.json().then((json) => {
+            json.data.forEach(element => { //Preenche a table de acordo com as informações dos endpoints
+              if (element.status === 'S') {
+                status = 'Aceito'
+              }
+              else if (element.status === 'N') {
+                status = 'Recusado'
+              }
+              else {
+                status = 'Pendente'
+              }
+              this.rows.push(this.createData(element.title, status, element._id, element.description))
+            });
+            this.setState({
+              okay: true
             })
-          }
+          })
+        })
+    }
 
-    };  
-  
+  };
+
   //Estilos da tabela
   StyledTableCell = withStyles(theme => ({
     head: {
@@ -143,60 +143,60 @@ class VerTutoriais extends Component{
     },
   }));
 
-  
-    render(){ //Renderiza a tela caso tenha carregado as informações da api
-      const classes = this.useStyles;
-      if(this.state.okay)return (
-        <div> 
-         <NavBar>
-         </NavBar>
-         <Typography variant="h3" color="inherit" style={{textAlign: "center", marginTop: "15px"}}>
-            Tutoriais
+
+  render() { //Renderiza a tela caso tenha carregado as informações da api
+    const classes = this.useStyles;
+    if (this.state.okay) return (
+      <div>
+        <NavBar>
+        </NavBar>
+        <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
+          Tutoriais
          </Typography>
-          <Paper className="style_root" style={{marginTop: "30px"}}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
-                  <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
-                  <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.rows.map(row => (
-                  <this.StyledTableRow key={row.autor}>
-                    <this.StyledTableCell component="th" scope="row">
-                      {row.nome}
-                    </this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
-                    <this.StyledTableCell align="right">{row.visualizar}
-                      <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event,row.nome,row.descricao)} >
-                        <VisibilityIcon />
-                      </IconButton>
-                    </this.StyledTableCell>
-                  </this.StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Modal
-                show={this.state.show}
-                handleClose={this.hideModal}
-              >
-              <div className = "modal-body">
+        <Paper className="style_root" style={{ marginTop: "30px" }}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
+                <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
+                <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.rows.map(row => (
+                <this.StyledTableRow key={row.autor}>
+                  <this.StyledTableCell component="th" scope="row">
+                    {row.nome}
+                  </this.StyledTableCell>
+                  <this.StyledTableCell align="right">{row.status}</this.StyledTableCell>
+                  <this.StyledTableCell align="right">{row.visualizar}
+                    <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event, row.nome, row.descricao)} >
+                      <VisibilityIcon />
+                    </IconButton>
+                  </this.StyledTableCell>
+                </this.StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Modal
+            show={this.state.show}
+            handleClose={this.hideModal}
+          >
+            <div className="modal-body">
               <p><b>Titulo: </b>{this.state.nome}</p>
-              <p><b>Descrição: </b></p><div style={{marginLeft: '20px', textAlign:'left'}} dangerouslySetInnerHTML={{ __html: this.state.descricao }}></div>
-              </div>
-              </Modal>
-          </Paper>
-        </div>
+              <p><b>Descrição: </b></p><div style={{ marginLeft: '20px', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: this.state.descricao }}></div>
+            </div>
+          </Modal>
+        </Paper>
+      </div>
+    )
+    else {
+      return (
+        <Loading />
       )
-      else{
-        return(
-          <Loading />
-        )
-      
-      }
+
     }
+  }
 }
 
-  export default VerTutoriais;
+export default VerTutoriais;
