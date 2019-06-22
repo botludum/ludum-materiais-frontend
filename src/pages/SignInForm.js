@@ -17,27 +17,34 @@ class SignInForm extends Component {
 
   componentWillMount() {
     if (this.Auth.loggedIn())
-      this.props.history.push('/link/gerenciar');
+      this.props.history.push('/tutoriais');
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state.username);
     this.Auth.login(this.state.username, this.state.password)
       .then(res => {
-        this.props.history.push('/link/gerenciar');
+        this.props.history.push('/tutoriais');
       })
       .catch(err => {
         alert(err);
       })
   }
 
-  handleCadastrarTutorial(){
+  handleCadastrarTutorial() {
     this.props.history.replace('/tutorial/cadastrar');
   }
 
-  handleCadastrarLink(){
+  handleCadastrarLink() {
     this.props.history.replace('/link/cadastrar');
+  }
+
+  handleTutoriais() {
+    this.props.history.replace('/tutoriais');
+  }
+
+  handleLinks() {
+    this.props.history.replace('/links');
   }
 
   render() {
@@ -59,13 +66,20 @@ class SignInForm extends Component {
           </div>
         </form>
         <div style={{ textAlign: "center" }}>
-          <br/><br/><br/>
+          <br/><br/>
           <Typography variant="h6" color="inherit" style={{ textAlign: "center" }}>
             Deseja cadastrar um material? Selecione uma opção abaixo:
           </Typography>
-          <br/><br/>
+          <br/>
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarTutorial.bind(this)}>Cadastrar Tutorial</button>
           <button className="FormField__Button mr-20" onClick={this.handleCadastrarLink.bind(this)}>Cadastrar Link</button>
+          <br/><br/>
+          <Typography variant="h6" color="inherit" style={{ textAlign: "center" }}>
+            Deseja ver os materiais enviados pela comunidade? Selecione uma opção abaixo:
+          </Typography>
+          <br/>
+          <button className="FormField__Button mr-20" onClick={this.handleTutoriais.bind(this)} style={{backgroundColor: '#5088ec'}}>Tutoriais</button>
+          <button className="FormField__Button mr-20" onClick={this.handleLinks.bind(this)} style={{backgroundColor: '#5088ec'}}>Links</button>
         </div>
       </div>
     );

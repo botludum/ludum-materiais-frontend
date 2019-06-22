@@ -7,9 +7,11 @@ import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import './Components/Modal.css'
+import './Components/gerencia.css';
 import NavBar from './helpers/navbar';
 import { withRouter } from 'react-router-dom';
+import ReactQuill from 'react-quill'; // ES6
+import 'react-quill/dist/quill.snow.css'; // ES6
 
 const SendButton = withStyles(theme => ({
   root: {
@@ -49,6 +51,7 @@ class CadastrarTutorial extends Component {
       responseMessage: '',
       show: false,
       loading: false,
+      text: ''
     };
   }
 
@@ -103,10 +106,14 @@ class CadastrarTutorial extends Component {
         })
         .catch((error) => {
           console.log(error);
-          this.setState({ responseMessage: 'Algo deu errado, tente novamente mais tarde' });
+          this.setState({ responseMessage: 'Algo deu errado, tente novamente mais tarde', loading: false });
           this.showModal();
         });
     }
+  }
+
+  handleChangeText = (value) => {
+    this.setState({ descricaoTutorial: value })
   }
 
   showModal = () => {
@@ -128,8 +135,26 @@ class CadastrarTutorial extends Component {
   };
 
   render() {
+    const toolbarOptions = [
+      ['bold', 'italic', 'underline'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      ['link', 'image', 'code-block'],
+      ['clean']
+    ];
+
+    const history = {
+      delay: 2000,
+      maxStack: 500,
+      userOnly: true
+    }
+    const formats = [
+      'bold', 'italic', 'underline',
+      'list', 'bullet', 'indent',
+      'link', 'image', 'code-block'
+    ]
     return (
-      <div style={{textAlign: "center"}}>
+      <div>
+      <div style={{ textAlign: "center" }}>
         <NavBar></NavBar>
         <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
           Cadastrar Tutorial
@@ -144,20 +169,14 @@ class CadastrarTutorial extends Component {
         />
         <br />
         <div style={error_style}>{this.state.nomeError}</div>
-        <TextField
-          error={this.state.descricaoError !== ''}
-          name="descricaoTutorial"
-          label="Escreva o seu tutorial"
-          value={this.state.descricaoTutorial || ''}
-          onChange={this.handleChange}
-          multiline={true}
-          rowsMax="20"
-          rows="15"
-          variant="outlined"
-          style={style_descricao}
-        />
-        <div style={error_style}>{this.state.descricaoError}</div>
+        <ReactQuill value={this.state.descricaoTutorial}
+          onChange={this.handleChangeText}
+          modules={{ syntax: true, toolbar: toolbarOptions, history: history }}
+          theme='snow'
+          formats={formats}
+          style={{ height: "300px", width: "80vw", marginLeft: "140px" }} />
         <br />
+        <br /><br />
         {this.state.loading ?
           (
             <CircularProgress />
@@ -171,24 +190,21 @@ class CadastrarTutorial extends Component {
                 </SendButton>
           )
         }
+        </div>
+        <div>
         <Modal
           show={this.state.show}
           handleClose={this.hideModal}
         >
           <div className="modal-body">
-            {this.state.responseMessage}
+            <p>{this.state.responseMessage}</p>
           </div>
         </Modal>
+      </div>
       </div>
     );
   }
 }
-
-const style_descricao = {
-  width: window.innerWidth * 0.5,
-  marginTop: 20,
-  marginBottom: 20,
-};
 
 const error_style = {
   fontSize: 15,

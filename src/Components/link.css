@@ -40,11 +40,6 @@
     left:50%;
     transform: translate(-50%,-50%);
  }
-.modal-body {
-    font: arial;
-    font-size: large;
-    text-align: center;
-}
 .display-block {
     display: block;
 }

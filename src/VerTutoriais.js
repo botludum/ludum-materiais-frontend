@@ -9,9 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import DoneIcon from '@material-ui/icons/Done';
 import CloseIcon from '@material-ui/icons/Close';
-import axios from 'axios';
 import NavBar from './helpers/navbar';
 import Loading from './helpers/loading';
 import './Components/Modal.css'
@@ -34,7 +32,7 @@ const Modal = ({ handleClose, show, children }) => {
 };
 
 
-class Tutoriais extends Component {
+class VerTutoriais extends Component {
 
   constructor() {
     super();
@@ -55,15 +53,10 @@ class Tutoriais extends Component {
 
   items = [];
 
-  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
+  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/aprovados/S"
 
-  rows = [];  //Atributo que preenche a tabela dos tutoriais
+  rows = [];
 
-  descricaoModal = '';
-
-  setDescricao(descricao) {
-    this.descricaoModal = descricao;
-  }
 
   createData(nome, status, autor, descricao, visualizar, aceitar, rejeitar) {
     return { nome, status, autor, descricao, visualizar, aceitar, rejeitar };
@@ -75,18 +68,6 @@ class Tutoriais extends Component {
 
   hideModal = () => { //Fecha o modal
     this.setState({ show: false });
-  }
-
-  handleAceitar(id) { //Aceita o tutorial
-    axios.put(this.url + id + '/S')
-    this.props.history.replace('/tutorial/gerenciar');
-  }
-
-  handleRejeitar(id) { //Recusa o tutorial
-    fetch(this.url + id + '/N', {
-      method: "PUT"
-    })
-    this.props.history.replace('/tutorial/gerenciar');
   }
 
   handleClick(event, nome, descricao) { //Abre o modal se estiver fechado e fecha o modal se estiver aberto
@@ -171,7 +152,7 @@ class Tutoriais extends Component {
         <NavBar>
         </NavBar>
         <Typography variant="h3" color="inherit" style={{ textAlign: "center", marginTop: "15px" }}>
-          Gerenciar Tutoriais
+          Tutoriais
          </Typography>
         <Paper className="style_root" style={{ marginTop: "30px" }}>
           <Table className={classes.table}>
@@ -180,8 +161,6 @@ class Tutoriais extends Component {
                 <this.StyledTableCell align="left">TITULO DO TUTORIAL</this.StyledTableCell>
                 <this.StyledTableCell align="right">STATUS</this.StyledTableCell>
                 <this.StyledTableCell align="right">VISUALIZAR</this.StyledTableCell>
-                <this.StyledTableCell align="right">APROVAR</this.StyledTableCell>
-                <this.StyledTableCell align="right">REJEITAR</this.StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,16 +173,6 @@ class Tutoriais extends Component {
                   <this.StyledTableCell align="right">{row.visualizar}
                     <IconButton className={classes.button} aria-label="Visualizar" onClick={(event) => this.handleClick(event, row.nome, row.descricao)} >
                       <VisibilityIcon />
-                    </IconButton>
-                  </this.StyledTableCell>
-                  <this.StyledTableCell align="right">{row.aceitar}
-                    <IconButton className={classes.button} aria-label="Aceitar" onClick={() => this.handleAceitar(row.autor)}>
-                      <DoneIcon />
-                    </IconButton>
-                  </this.StyledTableCell>
-                  <this.StyledTableCell align="right">{row.rejeitar}
-                    <IconButton className={classes.button} aria-label="Rejeitar" onClick={() => this.handleRejeitar(row.autor)}>
-                      <CloseIcon />
                     </IconButton>
                   </this.StyledTableCell>
                 </this.StyledTableRow>
@@ -231,4 +200,4 @@ class Tutoriais extends Component {
   }
 }
 
-export default Tutoriais;
+export default VerTutoriais;

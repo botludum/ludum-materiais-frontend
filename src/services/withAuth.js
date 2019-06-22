@@ -22,12 +22,12 @@ export default function withAuth(AuthComponent) {
                         user: profile
                     })
                 }
-                catch(err){
+                catch (err) {
                     Auth.logout()
                     this.props.history.replace('/')
                 }
             }
-        }                
+        }
         render() {
             if (this.state.user) {
                 return (
