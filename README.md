@@ -1,68 +1,38 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p align="center"> <img src="https://raw.githubusercontent.com/botludum/Ludum-Duvida/development/imagens/Ludum_LogoFinal(sem_fundo).png" width="auto" height="400" /> 
+<br>    
+<a href="https://www.gnu.org/licenses/gpl-3.0.pt-br.html"><img src="https://img.shields.io/badge/licence-GPL3-green.svg"/></a> 
+<a href="CODE_OF_CONDUCT.md"><img src="https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg"></a>
+<a href="https://gitlab.com/guilhermesiqueira/ludum-materiais-frontend/commits/master"><img alt="pipeline status" src="https://gitlab.com/guilhermesiqueira/ludum-materiais-frontend/badges/master/pipeline.svg" /></a>
+<br><br> <b><a href="https://t.me/OLudumBot">Clique aqui para conversar comigo no Telegram!</a></b> 
+<br> Se não conseguir me encontre pelo meu username é <b>@OLudumBot</b>
+<br> Ah! Eu também possuo uma versão de homologação é <a href="https://t.me/ludumdev_bot">@ludumdev_bot</a></b>    
 
-## Available Scripts
+# Ludum - O assistente virtual sobre o PyGame
+<p align="center">Link para o webclient: https://ludum-materiais-frontend.herokuapp.com/</p>
 
-In the project directory, you can run:
+## Sobre o repositório
+<p align="justify"> Encarregado de armazenar o front-end/webclient do Ludum. É responsável por gerenciar e cadastrar novos conteúdos do Ludum.</p>
 
-### `npm start`
+## Sobre o projeto
+<p align="justify">O Ludum é um chatbot que propõe-se a auxiliar em diversos aspectos as pessoas que desejam desenvolver jogos utilizando a biblioteca PyGame.</p>
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Para executar o webclient
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+1. Clonar o repositório:
+```bash
+git clone https://github.com/botludum/ludum-materiais-frontend
+```
 
-### `npm test`
+2. Execute o comando na pasta raíz do projeto:
+```bash
+docker build -t guilhermesiqueira/ludum-materiais-frontend .
+```
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+3. Em seguida:
+```bash
+docker-compose up
+```
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Quero saber mais!
+<p align="justify">Para mais informações e maiores esclarecimentos, visite o nosso repositório principal, 
+clicando <a href="https://github.com/fga-eps-mds/2019.1-Ludum">aqui</a></p>
