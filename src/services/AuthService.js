@@ -16,20 +16,20 @@ export default class AuthService {
                 password
             })
         }).then(res => {
-            this.setToken(res.token) 
+            this.setToken(res.token)
             return Promise.resolve(res);
         })
     }
 
     loggedIn() {
-        const token = this.getToken() 
-        return !!token && !this.isTokenExpired(token) 
+        const token = this.getToken()
+        return !!token && !this.isTokenExpired(token)
     }
 
     isTokenExpired(token) {
         try {
             const decoded = decode(token);
-            if (decoded.exp < Date.now() / 1000) { 
+            if (decoded.exp < Date.now() / 1000) {
                 return true;
             }
             else
@@ -76,12 +76,12 @@ export default class AuthService {
     }
 
     _checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) { 
+        if (response.status >= 200 && response.status < 300) {
             return response
         } else {
             var errorMessage = 'Usuário ou senha inválido';
             throw errorMessage;
-            
+
         }
     }
 }

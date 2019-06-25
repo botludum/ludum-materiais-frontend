@@ -21,7 +21,7 @@
   overflow-x: auto;
 }
 .style_table {
-  min-width: 700;
+  min-width: 80%;
 }
 .style_button {
   margin-top: 10%;
@@ -49,7 +49,7 @@
 .modal-head{
   font: arial;
   font-size: large;
-  text-align: center;
+  /* text-align: center; */
 }
 .modal-body {
   font: arial;

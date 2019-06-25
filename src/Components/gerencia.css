@@ -20,19 +20,21 @@
     z-index: 3;
    
   }
-.modal-main {
-    position:fixed;
+  .modal-main {
+    border-radius: 15px; 
+    position: fixed;
     background: white;
     width: 80%;
     height: auto;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
- }
+  }
 .modal-body {
     font: arial;
     font-size: large;
     text-align: center;
+    background-color: white
 }
 .display-block {
     display: block;

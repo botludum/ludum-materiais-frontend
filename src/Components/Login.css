@@ -61,7 +61,7 @@
   border: none;
   color: white;
   outline: none;
-  border-bottom: 1px solid #445366;
+  border-bottom: 1px solid #fefefe;
   font-size: 1em;
   font-weight: 300;
   padding-bottom: 10px;
@@ -69,7 +69,7 @@
 }
 
 .FormField__Input::placeholder {
-  color: #616E7F;
+  color: white;
 }
 
 .FormField__Button {
@@ -79,8 +79,10 @@
   outline: none;
   border-radius: 25px;
   padding: 15px 70px;
-  font-size: .8em;
+  font-size: .9em;
   font-weight: 500;
+  cursor:pointer;
+  width: 30%;
 }
 
 .FormField__Link {

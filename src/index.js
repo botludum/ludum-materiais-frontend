@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import './Components/index.css';
 import Login from './Login';
@@ -7,12 +8,15 @@ import * as serviceWorker from './serviceWorker';
 import CadastrarTutorial from './CadastrarTutorial';
 import CadastrarLink from './CadastrarLink';
 import GerenciaLinks from './GerenciaLinks';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import VerTutoriais from './VerTutoriais';
+import VerLinks from './VerLinks';
 
 const routing = (
   <Router>
     <div>
       <Route exact path="/" component={Login} />
+      <Route path="/tutoriais" component={VerTutoriais} />
+      <Route path="/links" component={VerLinks} />
       <Route path="/link/gerenciar" component={GerenciaLinks} />
       <Route path="/link/cadastrar" component={CadastrarLink} />
       <Route path="/tutorial/cadastrar" component={CadastrarTutorial} />
