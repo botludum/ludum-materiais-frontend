@@ -55,7 +55,7 @@ class Tutoriais extends Component {
 
   items = [];
 
-  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/"
+  url = "https://ludum-materiais.herokuapp.com/api/tutoriais/"
 
   rows = [];  //Atributo que preenche a tabela dos tutoriais
 

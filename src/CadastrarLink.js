@@ -90,7 +90,7 @@ class CadastrarLink extends Component {
   handleClick(event) {
     const isValid = this.validate();
     if (isValid) {
-      var apiBaseUrl = "https://produ-o.ludum-materiais.ludumbot.club/api/links/cadastrar";
+      var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/links/cadastrar";
 
       var body = {
         "title": this.state.nomeLink,
