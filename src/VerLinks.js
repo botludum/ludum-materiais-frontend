@@ -73,7 +73,7 @@ class VerLinks extends Component {
         })
     }
 
-    url = 'https://produ-o.ludum-materiais.ludumbot.club/api/links/aprovados/S';
+    url = 'https://ludum-materiais.herokuapp.com/api/links/aprovados/S';
     rows = [];
     titleModal = '';
     typeModal = '';

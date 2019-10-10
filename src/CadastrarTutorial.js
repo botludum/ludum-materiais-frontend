@@ -77,7 +77,7 @@ class CadastrarTutorial extends Component {
   handleClick = () => {
     const isValid = this.validate();
     if (isValid) {
-      var apiBaseUrl = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/cadastrar";
+      var apiBaseUrl = "https://ludum-materiais.herokuapp.com/api/tutoriais/cadastrar";
 
       var body = {
         "title": this.state.nomeTutorial,

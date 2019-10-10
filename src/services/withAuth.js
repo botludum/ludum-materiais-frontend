@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
-    const Auth = new AuthService('https://produ-o.ludum-materiais.ludumbot.club/api/usuario/auth');
+    const Auth = new AuthService('https://ludum-materiais.herokuapp.com/api/usuario/auth');
 
     return class AuthWrapped extends Component {
         constructor() {

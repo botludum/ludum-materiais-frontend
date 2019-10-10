@@ -53,7 +53,7 @@ class VerTutoriais extends Component {
 
   items = [];
 
-  url = "https://produ-o.ludum-materiais.ludumbot.club/api/tutoriais/aprovados/S"
+  url = "https://ludum-materiais.herokuapp.com/api/tutoriais/aprovados/S"
 
   rows = [];
 
